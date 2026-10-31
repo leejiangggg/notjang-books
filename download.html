@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>낫장북스 · 앱 다운로드</title>
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="css/site.css?v=3">
+<link rel="stylesheet" href="css/download.css?v=3">
+</head>
+<body class="light">
+<div class="stage">
+
+<a href="index.html" class="logo-link" aria-label="낫장북스 홈"><img src="assets/logo-light.png" alt="NOTJANG BOOOKS"></a>
+
+<div id="lang" class="lang" role="group" aria-label="Language"></div>
+
+<div class="toolbar" role="toolbar" aria-label="보기 방식">
+  <div class="seg">
+    <span class="pill" aria-hidden="true" style="transform: translateX(221px)"></span>
+    <a class="it" href="index.html" aria-label="세로 보기" title="세로 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4.5" width="16" height="6"></rect><rect x="4" y="13.5" width="16" height="6"></rect></svg></a>
+    <a class="it" href="index.html" aria-label="사방 보기" title="사방 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></a>
+    <span class="div" aria-hidden="true"></span>
+    <a class="it" href="about.html" aria-label="낫장북스 소개" title="About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M8 8.5V5h8v6h-4v3.5"></path><rect x="11" y="18" width="2" height="2" fill="currentColor" stroke="none"></rect></svg></a>
+    <a id="replay" class="it on" href="download.html" aria-current="page" aria-label="앱 다운로드 안내" title="앱 다운로드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10l5 5 5-5"></path><path d="M5 19h14"></path></svg></a>
+  </div>
+</div>
+
+<div id="world" class="world">
+
+  <div class="obj shop-google">
+    <span class="shd house" aria-hidden="true"></span>
+    <img src="assets/download/shop-google.png" alt="구글 가게" draggable="false">
+  </div>
+  <div class="obj pet dog">
+    <span class="shd" aria-hidden="true"></span>
+    <img src="assets/download/dog.png" alt="앉아 있는 강아지" draggable="false">
+  </div>
+  <div id="qrGoogle" class="qrb" role="group" aria-label="Google Play 다운로드">
+    <img src="assets/download/qr-google.png" alt="Google Play 다운로드 QR 코드">
+    <p>Google Play</p>
+    <a id="enterGoogle" class="enter" href="https://play.google.com/store" target="_blank" rel="noopener"></a>
+    <button type="button" class="back"></button>
+  </div>
+
+  <div class="obj shop-apple">
+    <span class="shd house" aria-hidden="true"></span>
+    <img src="assets/download/shop-apple.png" alt="애플 가게" draggable="false">
+  </div>
+  <div class="obj pet cat">
+    <span class="shd" aria-hidden="true"></span>
+    <img src="assets/download/cat.png" alt="잠자는 고양이" draggable="false">
+  </div>
+  <div id="qrApple" class="qrb" role="group" aria-label="App Store 다운로드">
+    <img src="assets/download/qr-apple.png" alt="App Store 다운로드 QR 코드">
+    <p>App Store</p>
+    <a id="enterApple" class="enter" href="https://apps.apple.com/" target="_blank" rel="noopener"></a>
+    <button type="button" class="back"></button>
+  </div>
+
+  <div id="sports" class="car sports">
+    <span class="shd" aria-hidden="true"></span>
+    <div class="body">
+      <img src="assets/download/sports.png" alt="스포츠카" draggable="false">
+      <span class="spoke" aria-hidden="true" style="left: 11.7%; top: 64.5%; width: 6%"></span>
+      <span class="spoke" aria-hidden="true" style="left: 50.6%; top: 73.4%; width: 6.5%"></span>
+    </div>
+    <button type="button" id="askApple" class="bubble" hidden></button>
+  </div>
+
+  <div id="truck" class="car truck">
+    <span class="shd" aria-hidden="true"></span>
+    <div class="body">
+      <img src="assets/download/truck.png" alt="트럭" draggable="false">
+      <span class="spoke" aria-hidden="true" style="left: 43.5%; top: 77.7%; width: 6.5%"></span>
+      <span class="spoke" aria-hidden="true" style="left: 86.1%; top: 69.1%; width: 6%"></span>
+    </div>
+    <button type="button" id="askGoogle" class="bubble" hidden></button>
+  </div>
+
+</div>
+</div>
+
+<script src="js/lang.js?v=3"></script>
+<script src="js/download.js?v=3"></script>
+</body>
+</html>

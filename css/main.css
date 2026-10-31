@@ -1,0 +1,71 @@
+/* 메인: 사방 보기(끌어서 둘러보는 평면) · 세로 보기 · 크게 보기 */
+body { min-height: 100vh; overflow: hidden; }
+body.vertical-mode { overflow: auto; }
+
+/* 평면 */
+.plane { position: relative; height: 100vh; min-height: 640px; overflow: hidden; touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+.plane.dragging { cursor: grabbing; }
+.plane img { pointer-events: none; }
+.tile { all: unset; box-sizing: border-box; position: absolute; left: 0; top: 0; width: 210px; cursor: pointer; will-change: transform; animation: fadein .9s ease both; }
+.tile:focus-visible, .vsheet:focus-visible { outline: 2px solid #f2ece0; outline-offset: 6px; }
+.tile img, .vsheet img { transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s; }
+.tile:hover img { transform: translateY(-6px) rotate(-1.2deg); box-shadow: 0 16px 30px rgba(0,0,0,.6); }
+.sheet-img { position: relative; display: block; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; box-shadow: 0 1px 4px rgba(60,40,10,.16); background: #2a2420; }
+.under { position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 2 / 3; object-fit: cover; transform: translate(8px,-7px) rotate(4deg); filter: brightness(.78); box-shadow: 0 2px 8px rgba(0,0,0,.35); pointer-events: none; }
+@keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
+
+/* 세로 보기 */
+.vertical { padding: 120px 24px 220px; display: flex; flex-direction: column; align-items: center; gap: 140px; }
+.vsheet { all: unset; cursor: pointer; box-sizing: border-box; width: min(440px, 84vw); display: block; position: relative; animation: reveal linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+.vsheet .sheet-img { box-shadow: 0 2px 8px rgba(60,40,10,.16); }
+.vsheet:hover img { transform: rotate(-.8deg) scale(1.015); box-shadow: 0 22px 44px rgba(0,0,0,.6); }
+@keyframes reveal { from { opacity: 0; transform: translateY(60px) scale(.94) } to { opacity: 1; transform: none } }
+.empty { padding: 40vh 24px 0; text-align: center; font-size: 14px; color: rgba(242,236,224,.6); line-height: 1.9; }
+
+/* 크게 보기 */
+.viewer { position: fixed; inset: 0; background: rgba(8,8,8,.82); backdrop-filter: blur(18px) saturate(.8); -webkit-backdrop-filter: blur(18px) saturate(.8); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 28px; z-index: 10; cursor: zoom-out; }
+.viewer[hidden] { display: none; }
+.viewer .close { position: absolute; top: 24px; right: 28px; display: flex; align-items: center; justify-content: center; width: 48px; height: 44px; border: 0; border-radius: 10px; cursor: pointer; background: transparent; color: #e8e8e8; }
+.vbtn { transition: background .2s, color .2s; }
+.vbtn:hover { background: #3d3d3d; }
+.stackw { position: relative; flex: none; }
+.front { display: block; height: calc(100vh - 210px); max-width: 88vw; aspect-ratio: 2 / 3; object-fit: cover; box-shadow: 0 24px 60px rgba(0,0,0,.65); cursor: default; position: relative; animation: pop .45s cubic-bezier(.2,.7,.2,1) both; background: #2a2420; }
+@keyframes pop { from { opacity: 0; transform: scale(.94) rotate(-2deg) } to { opacity: 1; transform: none } }
+.backpg { all: unset; position: absolute; inset: 0; cursor: pointer; transform: translate(22px,-16px) rotate(3.5deg); transition: transform .25s ease; }
+.backpg:hover { transform: translate(28px,-21px) rotate(5deg); }
+.backpg:focus-visible { outline: 2px solid #f2ece0; outline-offset: 4px; }
+.backpg img { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(.72); box-shadow: 0 12px 30px rgba(0,0,0,.5); }
+.backpg[hidden] { display: none; }
+@keyframes swapIn { from { transform: translate(22px,-16px) rotate(3.5deg); filter: brightness(.72) } to { transform: none; filter: none } }
+@keyframes swapIn2 { from { transform: translate(22px,-16px) rotate(3.5deg); filter: brightness(.72) } to { transform: none; filter: none } }
+.front.swapA { animation: swapIn .45s cubic-bezier(.2,.7,.2,1) both; }
+.front.swapB { animation: swapIn2 .45s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes inNa { from { opacity: 0; transform: translateX(90px) rotate(2deg) } to { opacity: 1; transform: none } }
+@keyframes inNb { from { opacity: 0; transform: translateX(90px) rotate(2deg) } to { opacity: 1; transform: none } }
+@keyframes inPa { from { opacity: 0; transform: translateX(-90px) rotate(-2deg) } to { opacity: 1; transform: none } }
+@keyframes inPb { from { opacity: 0; transform: translateX(-90px) rotate(-2deg) } to { opacity: 1; transform: none } }
+.front.inNa { animation: inNa .42s cubic-bezier(.2,.7,.2,1) both; }
+.front.inNb { animation: inNb .42s cubic-bezier(.2,.7,.2,1) both; }
+.front.inPa { animation: inPa .42s cubic-bezier(.2,.7,.2,1) both; }
+.front.inPb { animation: inPb .42s cubic-bezier(.2,.7,.2,1) both; }
+.front.dragging { animation: none; }
+.viewer .hint { margin: 0; font-size: 12px; opacity: .6; }
+.viewer .hint[hidden] { display: none; }
+.viewer .date { margin: -6px 0 0; font-size: 10pt; opacity: .6; letter-spacing: -0.01em; }
+.viewer .pos { margin: -8px 0 0; font-size: 12px; color: #9c958a; letter-spacing: .06em; }
+.viewer .pos[hidden] { display: none; }
+.viewer .actions { display: flex; gap: 4px; padding: 5px; background: rgba(34,34,34,.94); border: 1px solid #3c3c3c; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,.5); cursor: default; }
+.viewer .actions a, .viewer .actions button { display: flex; align-items: center; justify-content: center; width: 48px; height: 44px; border: 0; border-radius: 10px; cursor: pointer; background: transparent; color: #e8e8e8; text-decoration: none; font: inherit; }
+.viewer .actions button.like { min-width: 48px; width: auto; padding: 0 14px 0 12px; gap: 7px; font-size: 13px; }
+.viewer .actions button.like .n:empty { display: none; }
+@keyframes beat { 0% { transform: scale(1) } 35% { transform: scale(1.35) } 100% { transform: scale(1) } }
+.beat { animation: beat .4s cubic-bezier(.2,.7,.2,1); }
+
+@media (max-width: 767px) {
+  .tile { width: 150px; }
+  .vertical { padding: 72px 24px 160px; gap: 72px; }
+  .vsheet { width: 290px; }
+  .viewer { padding: 22px; }
+  .viewer .close { top: 52px; right: 16px; }
+  .front { height: auto; width: 320px; max-height: 520px; cursor: grab; touch-action: none; }
+}

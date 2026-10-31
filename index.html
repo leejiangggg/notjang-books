@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>낫장북스 · NOTJANG BOOOKS</title>
+<meta name="description" content="매일 사람들이 쓴 한 장 한 장을 진열하는 인터넷 서점.">
+<meta name="theme-color" content="#110000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="css/site.css?v=3">
+<link rel="stylesheet" href="css/main.css?v=3">
+</head>
+<body>
+
+<main id="plane" class="plane" aria-label="낫장 사방 보기 — 드래그해서 둘러보기"></main>
+<main id="vertical" class="vertical" hidden></main>
+
+<h1 class="logo"><img src="assets/logo-dark.png" alt="NOTJANG BOOOKS"></h1>
+
+<div class="toolbar" role="toolbar" aria-label="보기 방식">
+  <div class="seg">
+    <span id="pill" class="pill" aria-hidden="true" style="transform: translateX(68px)"></span>
+    <button type="button" id="btnVertical" class="it" aria-label="세로 보기" title="세로 보기" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4.5" width="16" height="6"></rect><rect x="4" y="13.5" width="16" height="6"></rect></svg></button>
+    <button type="button" id="btnCanvas" class="it on" aria-label="사방 보기" title="사방 보기" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+    <span class="div" aria-hidden="true"></span>
+    <a class="it" href="about.html" aria-label="낫장북스 소개" title="About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M8 8.5V5h8v6h-4v3.5"></path><rect x="11" y="18" width="2" height="2" fill="currentColor" stroke="none"></rect></svg></a>
+    <a class="it" href="download.html" aria-label="앱 다운로드 안내" title="앱 다운로드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10l5 5 5-5"></path><path d="M5 19h14"></path></svg></a>
+  </div>
+</div>
+
+<p id="status" class="status"></p>
+
+<div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="낫장 크게 보기" hidden>
+  <button type="button" id="close" class="close vbtn" aria-label="닫기" title="닫기"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+  <div id="stack" class="stackw">
+    <button type="button" id="backpg" class="backpg" aria-label="다른 장 보기" hidden><img src="" alt="" draggable="false"></button>
+    <img id="front" class="front" src="" alt="" draggable="false">
+  </div>
+  <p id="hint" class="hint" hidden></p>
+  <p id="date" class="date"></p>
+  <p id="pos" class="pos" hidden></p>
+  <div id="actions" class="actions">
+    <a id="dl" class="vbtn" href="#" download aria-label="다운로드" title="다운로드"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10.5l5 5 5-5"></path><path d="M5 19.5h14"></path></svg></a>
+    <button type="button" id="like" class="vbtn like" aria-label="좋아요" title="좋아요" aria-pressed="false"><svg id="heart" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"></path></svg><span id="likeN" class="n"></span></button>
+  </div>
+</div>
+
+<script src="config.js?v=3"></script>
+<script src="js/lang.js?v=3"></script>
+<script src="js/shop.js?v=3"></script>
+<script src="js/main.js?v=3"></script>
+</body>
+</html>
