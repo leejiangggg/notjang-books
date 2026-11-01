@@ -137,7 +137,7 @@
   // ── 크게 보기 ────────────────────────────────────────────
   const vw = {
     front: $('#front'), back: $('#backpg'), backImg: $('#backpg img'), hint: $('#hint'), date: $('#date'), pos: $('#pos'),
-    dl: $('#dl'), like: $('#like'), heart: $('#heart'), likeN: $('#likeN'), close: $('#close')
+    dl: $('#dl'), like: $('#like'), heart: $('#heart'), likeN: $('#likeN')
   };
   let cur = -1, pg = 0, anim = 0;
 
@@ -152,7 +152,9 @@
     vw.pos.hidden = !isMobile();
     vw.pos.textContent = (i + 1) + ' / ' + works.length;
     renderLike();
-    vw.close.focus({ preventScroll: true });
+    wheelSum = 0;
+    viewer.style.backgroundColor = '';
+    viewer.focus({ preventScroll: true });
   }
   function renderPage() {
     const w = works[cur];
@@ -178,9 +180,8 @@
     vw.front.className = 'front ' + (anim++ % 2 ? 'swapB' : 'swapA');
     renderPage();
   }
-  function closeViewer() { viewer.hidden = true; cur = -1; }
+  function closeViewer() { viewer.hidden = true; cur = -1; vw.front.style.transform = ''; viewer.style.backgroundColor = ''; }
   vw.back.addEventListener('click', flip);
-  vw.close.addEventListener('click', (e) => { e.stopPropagation(); closeViewer(); });
   viewer.addEventListener('click', closeViewer);
   $('#stack').addEventListener('click', (e) => e.stopPropagation());
   $('#actions').addEventListener('click', (e) => e.stopPropagation());
@@ -191,25 +192,52 @@
     if (e.key === 'ArrowLeft' && cur > 0) openViewer(cur - 1, 'P');
   });
 
-  // 폰에서는 좌우로 밀어 다음·이전 작품
+  // 닫기: 종이를 아래로 끌어내리면(폰), 휠을 내리면(데스크톱), 바깥을 누르면, Esc.
+  let wheelSum = 0;
+  viewer.addEventListener('wheel', (e) => {
+    if (viewer.hidden) return;
+    wheelSum = Math.max(0, wheelSum + e.deltaY);
+    if (wheelSum > 120) closeViewer();
+  }, { passive: true });
+
+  // 종이 끌기: 폰에서는 좌우로 다음·이전 작품, 아래로는 닫기. 데스크톱은 아래로만.
   let sw = null;
-  vw.front.addEventListener('pointerdown', (e) => { if (!isMobile()) return; sw = { x: e.clientX }; vw.front.classList.add('dragging'); vw.front.setPointerCapture(e.pointerId); });
+  vw.front.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    sw = { x: e.clientX, y: e.clientY, axis: '', dx: 0, dy: 0 };
+    vw.front.classList.add('dragging');
+    vw.front.setPointerCapture(e.pointerId);
+  });
   vw.front.addEventListener('pointermove', (e) => {
     if (!sw) return;
-    let dx = e.clientX - sw.x;
-    if ((dx > 0 && cur === 0) || (dx < 0 && cur === works.length - 1)) dx /= 4;
-    sw.dx = dx;
+    let dx = e.clientX - sw.x, dy = e.clientY - sw.y;
+    if (!sw.axis) {
+      if (Math.abs(dx) + Math.abs(dy) < 8) return;
+      sw.axis = (isMobile() && Math.abs(dx) > Math.abs(dy)) ? 'x' : 'y';
+    }
     vw.front.style.transition = 'none';
-    vw.front.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 40).toFixed(2) + 'deg)';
+    if (sw.axis === 'x') {
+      if ((dx > 0 && cur === 0) || (dx < 0 && cur === works.length - 1)) dx /= 4;
+      sw.dx = dx;
+      vw.front.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 40).toFixed(2) + 'deg)';
+    } else {
+      if (dy < 0) dy /= 4;
+      sw.dy = dy;
+      const k = Math.min(Math.max(dy, 0) / 360, 1);
+      vw.front.style.transform = 'translateY(' + dy + 'px) scale(' + (1 - k * 0.12).toFixed(3) + ')';
+      viewer.style.backgroundColor = 'rgba(8,8,8,' + (0.82 - k * 0.5).toFixed(2) + ')';
+    }
   });
   const swEnd = () => {
     if (!sw) return;
-    const dx = sw.dx || 0; sw = null;
+    const { axis, dx, dy } = sw; sw = null;
     vw.front.classList.remove('dragging');
-    if (dx < -60 && cur < works.length - 1) return openViewer(cur + 1, 'N');
-    if (dx > 60 && cur > 0) return openViewer(cur - 1, 'P');
+    if (axis === 'x' && dx < -60 && cur < works.length - 1) return openViewer(cur + 1, 'N');
+    if (axis === 'x' && dx > 60 && cur > 0) return openViewer(cur - 1, 'P');
+    if (axis === 'y' && dy > 90) return closeViewer();
     vw.front.style.transition = 'transform .3s cubic-bezier(.2,.7,.2,1)';
     vw.front.style.transform = '';
+    viewer.style.backgroundColor = '';
   };
   vw.front.addEventListener('pointerup', swEnd);
   vw.front.addEventListener('pointercancel', swEnd);

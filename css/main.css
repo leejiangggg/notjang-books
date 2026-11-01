@@ -25,7 +25,6 @@ body.vertical-mode { overflow: auto; }
 /* 크게 보기 */
 .viewer { position: fixed; inset: 0; background: rgba(8,8,8,.82); backdrop-filter: blur(18px) saturate(.8); -webkit-backdrop-filter: blur(18px) saturate(.8); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 28px; z-index: 10; cursor: zoom-out; }
 .viewer[hidden] { display: none; }
-.viewer .close { position: absolute; top: 24px; right: 28px; display: flex; align-items: center; justify-content: center; width: 48px; height: 44px; border: 0; border-radius: 10px; cursor: pointer; background: transparent; color: #e8e8e8; }
 .vbtn { transition: background .2s, color .2s; }
 .vbtn:hover { background: #3d3d3d; }
 .stackw { position: relative; flex: none; }
@@ -49,6 +48,8 @@ body.vertical-mode { overflow: auto; }
 .front.inPa { animation: inPa .42s cubic-bezier(.2,.7,.2,1) both; }
 .front.inPb { animation: inPb .42s cubic-bezier(.2,.7,.2,1) both; }
 .front.dragging { animation: none; }
+.viewer { outline: none; }
+.viewer.pulling { transition: background-color .2s; }
 .viewer .hint { margin: 0; font-size: 12px; opacity: .6; }
 .viewer .hint[hidden] { display: none; }
 .viewer .date { margin: -6px 0 0; font-size: 10pt; opacity: .6; letter-spacing: -0.01em; }
@@ -66,6 +67,5 @@ body.vertical-mode { overflow: auto; }
   .vertical { padding: 72px 24px 160px; gap: 72px; }
   .vsheet { width: 290px; }
   .viewer { padding: 22px; }
-  .viewer .close { top: 52px; right: 16px; }
-  .front { height: auto; width: 320px; max-height: 520px; cursor: grab; touch-action: none; }
+    .front { height: auto; width: 320px; max-height: 520px; cursor: grab; touch-action: none; }
 }
