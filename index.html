@@ -8,8 +8,8 @@
 <meta name="theme-color" content="#110000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;800&family=Noto+Serif+JP:wght@400;700;800&display=swap">
-<link rel="stylesheet" href="css/site.css?v=6">
-<link rel="stylesheet" href="css/main.css?v=6">
+<link rel="stylesheet" href="css/site.css?v=7">
+<link rel="stylesheet" href="css/main.css?v=7">
 </head>
 <body>
 
@@ -36,18 +36,20 @@
     <button type="button" id="backpg" class="backpg" aria-label="다른 장 보기" hidden><img src="" alt="" draggable="false"></button>
     <img id="front" draggable="false" class="front" src="" alt="" draggable="false">
   </div>
-  <p id="hint" class="hint" hidden></p>
   <p id="date" class="date"></p>
   <p id="pos" class="pos" hidden></p>
   <div id="actions" class="actions">
-    <a id="dl" class="vbtn" href="#" download aria-label="다운로드" title="다운로드"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10.5l5 5 5-5"></path><path d="M5 19.5h14"></path></svg></a>
-    <button type="button" id="like" class="vbtn like" aria-label="좋아요" title="좋아요" aria-pressed="false"><svg id="heart" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"></path></svg><span id="likeN" class="n"></span></button>
+    <button type="button" id="more" class="more vbtn" aria-label="더 보기" aria-haspopup="menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+    <div id="menu" class="menu" role="menu" hidden>
+      <a id="dl" class="vbtn" role="menuitem" href="#" download><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10.5l5 5 5-5"></path><path d="M5 19.5h14"></path></svg><span id="dlL"></span></a>
+      <button type="button" id="like" class="vbtn like" role="menuitemcheckbox" aria-checked="false"><svg id="heart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"></path></svg><span id="likeL"></span><span id="likeN" class="n"></span></button>
+    </div>
   </div>
 </div>
 
-<script src="config.js?v=6"></script>
-<script src="js/lang.js?v=6"></script>
-<script src="js/shop.js?v=6"></script>
-<script src="js/main.js?v=6"></script>
+<script src="config.js?v=7"></script>
+<script src="js/lang.js?v=7"></script>
+<script src="js/shop.js?v=7"></script>
+<script src="js/main.js?v=7"></script>
 </body>
 </html>

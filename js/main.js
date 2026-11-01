@@ -12,10 +12,10 @@
   const pill = $('#pill');
 
   const T = {
-    KR: { date: (d) => '이 낱장은 ' + d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) + '에 출판되었습니다.', two: (n, m) => n + '장짜리 낫장이에요 · 뒷장을 눌러 넘겨보세요 (' + m + ')', empty: '아직 서점에 걸린 낱장이 없어요.<br>앱에서 낱장을 내놓으면 여기에 걸려요.', sample: '예시 낱장 · 토큰이 없어 서점에 연결하지 않았어요', err: '서점을 읽지 못했어요: ' },
-    EN: { date: (d) => 'This sheet was published on ' + d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '.', two: (n, m) => n + '-sheet work · tap the back sheet to turn (' + m + ')', empty: 'Nothing in the shop yet.<br>Put a sheet out from the app and it shows up here.', sample: 'Sample sheets · no token, not connected to the shop', err: 'Couldn\'t read the shop: ' },
-    JP: { date: (d) => 'この一枚は' + d.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) + 'に出版されました。', two: (n, m) => n + '枚つづりです · 後ろの一枚を押してめくる (' + m + ')', empty: 'まだ店に並んだ一枚はありません。<br>アプリから出すとここに並びます。', sample: 'サンプル · トークンがないため店に接続していません', err: '店を読めませんでした: ' },
-    DE: { date: (d) => 'Dieses Blatt wurde am ' + d.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }) + ' veröffentlicht.', two: (n, m) => n + ' Blätter · hinteres Blatt antippen zum Umblättern (' + m + ')', empty: 'Noch nichts im Laden.<br>Lege ein Blatt aus der App aus, dann erscheint es hier.', sample: 'Beispielblätter · kein Token, nicht mit dem Laden verbunden', err: 'Laden konnte nicht gelesen werden: ' }
+    KR: { date: (d) => '이 낱장은 ' + d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) + '에 출판되었습니다.', empty: '아직 서점에 걸린 낱장이 없어요.<br>앱에서 낱장을 내놓으면 여기에 걸려요.', sample: '예시 낱장 · 토큰이 없어 서점에 연결하지 않았어요', err: '서점을 읽지 못했어요: ', dl: '다운로드', like: '좋아요' },
+    EN: { date: (d) => 'This sheet was published on ' + d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '.', empty: 'Nothing in the shop yet.<br>Put a sheet out from the app and it shows up here.', sample: 'Sample sheets · no token, not connected to the shop', err: 'Couldn\'t read the shop: ', dl: 'Download', like: 'Like' },
+    JP: { date: (d) => 'この一枚は' + d.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) + 'に出版されました。', empty: 'まだ店に並んだ一枚はありません。<br>アプリから出すとここに並びます。', sample: 'サンプル · トークンがないため店に接続していません', err: '店を読めませんでした: ', dl: 'ダウンロード', like: 'いいね' },
+    DE: { date: (d) => 'Dieses Blatt wurde am ' + d.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }) + ' veröffentlicht.', empty: 'Noch nichts im Laden.<br>Lege ein Blatt aus der App aus, dann erscheint es hier.', sample: 'Beispielblätter · kein Token, nicht mit dem Laden verbunden', err: 'Laden konnte nicht gelesen werden: ', dl: 'Herunterladen', like: 'Gefällt mir' }
   };
   const tx = () => T[window.NotjangLang ? NotjangLang.get() : 'KR'];
 
@@ -129,15 +129,15 @@
     btnVertical.setAttribute('aria-pressed', !canvas);
     pill.style.transform = 'translateX(' + (canvas ? 68 : 0) + 'px)';
     if (!canvas) { cv.vx = 0; cv.vy = 0; }
-    else if (!cv.tiles.length) buildCanvas();
+    else { scrollTo(0, 0); if (!cv.tiles.length) buildCanvas(); }
   }
   btnCanvas.addEventListener('click', () => setView('canvas'));
   btnVertical.addEventListener('click', () => setView('vertical'));
 
   // ── 크게 보기 ────────────────────────────────────────────
   const vw = {
-    front: $('#front'), back: $('#backpg'), backImg: $('#backpg img'), hint: $('#hint'), date: $('#date'), pos: $('#pos'),
-    dl: $('#dl'), like: $('#like'), heart: $('#heart'), likeN: $('#likeN')
+    front: $('#front'), back: $('#backpg'), backImg: $('#backpg img'), date: $('#date'), pos: $('#pos'),
+    dl: $('#dl'), dlL: $('#dlL'), like: $('#like'), likeL: $('#likeL'), heart: $('#heart'), likeN: $('#likeN'), more: $('#more'), menu: $('#menu')
   };
   let cur = -1, pg = 0, anim = 0;
 
@@ -149,6 +149,8 @@
     vw.front.style.transform = ''; vw.front.style.transition = '';
     renderPage();
     vw.date.textContent = tx().date(w.date);
+    vw.dlL.textContent = tx().dl; vw.likeL.textContent = tx().like;
+    showMenu(false);
     vw.pos.hidden = !isMobile();
     vw.pos.textContent = (i + 1) + ' / ' + works.length;
     renderLike();
@@ -164,24 +166,22 @@
     if (n > 1) {
       vw.back.hidden = false;
       vw.backImg.src = w.sheets[(pg + 1) % n].src;
-      vw.hint.hidden = false;
-      vw.hint.textContent = tx().two(n, (pg + 1) + ' / ' + n);
     } else {
       vw.back.hidden = true;
-      vw.hint.hidden = true;
     }
     vw.dl.href = w.sheets[pg].src;
     vw.dl.download = 'notjang-' + w.no + (n > 1 ? '-' + (pg + 1) : '') + '.png';
   }
-  function flip(e) {
-    e.stopPropagation();
+  // 앞장을 누르거나 뒷장을 누르면 다음 장
+  function flipPage() {
     const n = works[cur].sheets.length;
+    if (n < 2) return;
     pg = (pg + 1) % n;
     vw.front.className = 'front ' + (anim++ % 2 ? 'swapB' : 'swapA');
     renderPage();
   }
-  function closeViewer() { viewer.hidden = true; cur = -1; vw.front.style.transform = ''; viewer.style.backgroundColor = ''; }
-  vw.back.addEventListener('click', flip);
+  function closeViewer() { viewer.hidden = true; cur = -1; showMenu(false); vw.front.style.transform = ''; viewer.style.backgroundColor = ''; }
+  vw.back.addEventListener('click', (e) => { e.stopPropagation(); flipPage(); });
   viewer.addEventListener('click', closeViewer);
   $('#stack').addEventListener('click', (e) => e.stopPropagation());
   $('#actions').addEventListener('click', (e) => e.stopPropagation());
@@ -235,6 +235,7 @@
     if (axis === 'x' && dx < -60 && cur < works.length - 1) return openViewer(cur + 1, 'N');
     if (axis === 'x' && dx > 60 && cur > 0) return openViewer(cur - 1, 'P');
     if (axis === 'y' && dy > 90) return closeViewer();
+    if (!axis) return flipPage();
     vw.front.style.transition = 'transform .3s cubic-bezier(.2,.7,.2,1)';
     vw.front.style.transform = '';
     viewer.style.backgroundColor = '';
@@ -242,13 +243,20 @@
   vw.front.addEventListener('pointerup', swEnd);
   vw.front.addEventListener('pointercancel', swEnd);
 
+  // 오른쪽 위 더 보기 → 다운로드 · 좋아요
+  function showMenu(on) {
+    vw.menu.hidden = !on;
+    vw.more.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  vw.more.addEventListener('click', (e) => { e.stopPropagation(); showMenu(vw.menu.hidden); });
+
   // 좋아요: 아직 서버가 없어 이 브라우저에만 남는다.
   function renderLike() {
     const w = works[cur];
     const on = !!liked[w.id];
     vw.heart.setAttribute('fill', on ? '#e0483e' : 'none');
     vw.heart.setAttribute('stroke', on ? '#e0483e' : 'currentColor');
-    vw.like.setAttribute('aria-pressed', on);
+    vw.like.setAttribute('aria-checked', on);
     vw.likeN.textContent = '';
   }
   vw.like.addEventListener('click', (e) => {
@@ -263,6 +271,7 @@
   // 다운로드: 다른 출처의 PNG는 download 속성이 안 먹어서 받아서 저장한다. 안 되면 새 탭.
   vw.dl.addEventListener('click', async (e) => {
     const href = vw.dl.href, name = vw.dl.download;
+    showMenu(false);
     if (href.startsWith(location.origin)) return;
     e.preventDefault();
     try {
