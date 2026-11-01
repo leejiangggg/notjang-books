@@ -21,7 +21,7 @@
 
   let works = [];
   let view = 'canvas';
-  let liked = {};
+  let liked = {}, likeCounts = {};
   try { liked = JSON.parse(localStorage.getItem('nb-liked') || '{}'); } catch (e) {}
 
   // ── 사방 보기 ────────────────────────────────────────────
@@ -257,14 +257,18 @@
     vw.heart.setAttribute('fill', on ? '#e0483e' : 'none');
     vw.heart.setAttribute('stroke', on ? '#e0483e' : 'currentColor');
     vw.like.setAttribute('aria-checked', on);
-    vw.likeN.textContent = '';
+    const n = likeCounts[w.id] || 0;
+    vw.likeN.textContent = n > 0 ? String(n) : '';
   }
   vw.like.addEventListener('click', (e) => {
     e.stopPropagation();
     const w = works[cur];
-    liked[w.id] = !liked[w.id];
+    const on = !liked[w.id];
+    liked[w.id] = on;
     try { localStorage.setItem('nb-liked', JSON.stringify(liked)); } catch (err) {}
+    likeCounts[w.id] = Math.max(0, (likeCounts[w.id] || 0) + (on ? 1 : -1));
     renderLike();
+    NotjangLikes.set(w.id, on).then((n) => { if (n != null) { likeCounts[w.id] = n; if (cur >= 0 && works[cur].id === w.id) renderLike(); } }).catch(() => {});
     vw.heart.classList.remove('beat'); void vw.heart.offsetWidth; vw.heart.classList.add('beat');
   });
 
@@ -296,6 +300,7 @@
     else status.textContent = '';
     buildVertical();
     buildCanvas();
+    NotjangLikes.counts(works.map((w) => w.id)).then((c) => { likeCounts = c; if (cur >= 0) renderLike(); }).catch(() => {});
     if (!works.length) setView('vertical'); else setView('canvas');
   }
   let rt;
