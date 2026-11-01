@@ -46,6 +46,9 @@ body { background: #ffffff; color: #111111; }
 .qrb img { display: block; width: 140px; height: 140px; object-fit: contain; }
 .qrb p { margin: 0; font-size: 13px; font-weight: 800; }
 .qrb .enter { display: none; color: #111; text-decoration: none; }
+/* 아직 문을 안 연 가게: QR 대신 한 줄 */
+.qrb.soon { gap: 8px; padding: 14px 18px 12px; }
+.qrb.soon p { max-width: 190px; white-space: normal; text-align: center; line-height: 1.5; }
 
 /* 자리: 왼쪽 3분의 1이 구글 가게, 오른쪽 3분의 1이 애플 가게 */
 .shop-google { left: calc(16.6667% - 150px); bottom: calc(26% + 84px); width: 250px; z-index: 1; }
@@ -66,6 +69,8 @@ body { background: #ffffff; color: #111111; }
   .qrb { display: block; white-space: nowrap; padding: 11px 18px; font-weight: 800; font-size: 14px; }
   .qrb img, .qrb p, .qrb .back { display: none; }
   .qrb .enter { display: inline; }
+  .qrb.soon { display: flex; }
+  .qrb.soon p { display: block; max-width: 160px; }
   .shop-google { left: calc(16.6667% - 92px); bottom: calc(30% + 50px); width: 150px; }
   .dog { left: calc(16.6667% - 176px); bottom: calc(30% + 2px); width: 72px; }
   #qrGoogle { left: calc(16.6667% - 17px); bottom: calc(30% + 222px); }

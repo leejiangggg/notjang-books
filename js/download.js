@@ -4,10 +4,10 @@
   const isMobile = () => matchMedia('(max-width: 767px)').matches;
 
   const TX = {
-    KR: { askApple: '앱스토어 점으로 가시나요?', askGoogle: '구글플레이 점으로 가시나요?', back: '돌아가기', enterApple: '앱스토어 점으로 들어가기', enterGoogle: '구글플레이 점으로 들어가기' },
-    EN: { askApple: 'Heading to the App Store shop?', askGoogle: 'Heading to the Google Play shop?', back: 'Go back', enterApple: 'Enter the App Store shop', enterGoogle: 'Enter the Google Play shop' },
-    JP: { askApple: 'App Storeのお店へ行きますか？', askGoogle: 'Google Playのお店へ行きますか？', back: '戻る', enterApple: 'App Storeのお店に入る', enterGoogle: 'Google Playのお店に入る' },
-    DE: { askApple: 'Zum App-Store-Laden?', askGoogle: 'Zum Google-Play-Laden?', back: 'Zurück', enterApple: 'App-Store-Laden betreten', enterGoogle: 'Google-Play-Laden betreten' }
+    KR: { askApple: '앱스토어 점으로 가시나요?', askGoogle: '구글플레이 점은 준비 중이에요', back: '돌아가기', soonGoogle: '안드로이드 앱은 아직 만드는 중이에요. 문을 열면 여기에 걸어 둘게요.', enterApple: '앱스토어 점으로 들어가기' },
+    EN: { askApple: 'Heading to the App Store shop?', askGoogle: 'The Google Play shop isn’t open yet', back: 'Go back', soonGoogle: 'The Android app is still being made. The sign goes up here when it opens.', enterApple: 'Enter the App Store shop' },
+    JP: { askApple: 'App Storeのお店へ行きますか？', askGoogle: 'Google Playのお店は準備中です', back: '戻る', soonGoogle: 'Androidアプリはまだ作っています。開店したらここに掛けておきます。', enterApple: 'App Storeのお店に入る' },
+    DE: { askApple: 'Zum App-Store-Laden?', askGoogle: 'Der Google-Play-Laden ist noch nicht offen', back: 'Zurück', soonGoogle: 'Die Android-App ist noch in Arbeit. Wenn der Laden öffnet, hängt das Schild hier.', enterApple: 'App-Store-Laden betreten' }
   };
 
   const world = $('#world'), sports = $('#sports'), truck = $('#truck');
@@ -24,7 +24,7 @@
     askGoogle.textContent = t.askGoogle;
     document.querySelectorAll('.back').forEach((b) => { b.textContent = t.back; });
     $('#enterApple').textContent = t.enterApple;
-    $('#enterGoogle').textContent = t.enterGoogle;
+    $('#soonGoogle').textContent = t.soonGoogle;
   }
 
   // 자리값: 데스크톱과 폰이 다르다(디자인의 Download / DownloadApp).

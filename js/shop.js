@@ -54,7 +54,7 @@ window.NotjangShop = (function () {
         src: image.downloadURL,
         width: Number(field(rec, 'width') || 0),
         height: Number(field(rec, 'height') || 0),
-        alt: '낫장 ' + (field(rec, 'number') || '') + '번'
+        alt: '낱장 ' + (field(rec, 'number') || '') + '번'
       });
     }
     const works = [...groups.values()];

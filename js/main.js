@@ -44,7 +44,7 @@
       const bx = c * cv.cw + (m ? 24 : 40), by = r * cv.ch + (c % 2 ? (m ? 150 : 210) : (m ? 30 : 40));
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'tile';
-      b.setAttribute('aria-label', '낫장 ' + w.no + '번 크게 보기');
+      b.setAttribute('aria-label', '낱장 ' + w.no + '번 크게 보기');
       b.style.animationDelay = (k * 0.03).toFixed(2) + 's';
       b.innerHTML = (w.sheets.length > 1 ? '<img class="under" src="' + w.sheets[1].src + '" alt="" aria-hidden="true" draggable="false">' : '') +
         '<img class="sheet-img" src="' + w.sheets[0].src + '" alt="' + esc(w.sheets[0].alt || '') + '" draggable="false">';
@@ -109,7 +109,7 @@
     works.forEach((w, i) => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'vsheet';
-      b.setAttribute('aria-label', '낫장 ' + w.no + '번 크게 보기');
+      b.setAttribute('aria-label', '낱장 ' + w.no + '번 크게 보기');
       b.innerHTML = (w.sheets.length > 1 ? '<img class="under" src="' + w.sheets[1].src + '" alt="" aria-hidden="true" draggable="false">' : '') +
         '<img class="sheet-img" src="' + w.sheets[0].src + '" alt="' + esc(w.sheets[0].alt || '') + '" loading="lazy">';
       b.addEventListener('click', () => openViewer(i));
