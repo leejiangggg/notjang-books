@@ -7,7 +7,6 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 body { background: var(--bg); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
-body.light { background: #ffffff; color: #111111; }
 img { -webkit-user-drag: none; }
 
 /* ── 로고 ─────────────────────────────────────── */
@@ -26,15 +25,6 @@ h1.logo { pointer-events: none; }
 .seg .it svg { width: 22px; height: 22px; }
 .seg .div { width: 1px; height: 28px; margin: 0 8px; background: #3a3a3a; flex: none; }
 
-/* 흰 배경(다운로드) 버전 */
-body.light .seg { background: #ffffff; box-shadow: 0 8px 22px rgba(0,0,0,.10), inset 0 0 0 1px rgba(0,0,0,.12); }
-body.light .seg .pill { background: #111111; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
-body.light .seg .it { color: #8a8a8a; }
-body.light .seg .it:hover { color: #333333; }
-body.light .seg .it.on, body.light .seg .it.on:hover { color: #ffffff; }
-body.light .seg .it:focus-visible { outline-color: #111111; }
-body.light .seg .div { background: #d9d9d9; }
-
 /* ── 언어 스위치 ─────────────────────────────── */
 .lang { position: fixed; right: 40px; top: 40px; display: flex; padding: 4px; border-radius: 999px; background: #1c1c1c; box-shadow: 0 8px 22px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.06); z-index: 8; }
 .lang .lpill { position: absolute; top: 4px; left: 4px; width: 46px; height: 40px; border-radius: 999px; background: #ffffff; transition: transform .42s cubic-bezier(.34,1.45,.5,1); }
@@ -42,12 +32,6 @@ body.light .seg .div { background: #d9d9d9; }
 .lang .lb:hover { color: #d0d0d0; }
 .lang .lb.on, .lang .lb.on:hover { color: #111111; }
 .lang .lb:focus-visible { outline: 2px solid #ffffff; outline-offset: -3px; }
-body.light .lang { background: #ffffff; box-shadow: 0 6px 18px rgba(0,0,0,.10), inset 0 0 0 1px rgba(0,0,0,.12); }
-body.light .lang .lpill { background: #111111; }
-body.light .lang .lb { color: #8a8a8a; }
-body.light .lang .lb:hover { color: #333333; }
-body.light .lang .lb.on, body.light .lang .lb.on:hover { color: #ffffff; }
-body.light .lang .lb:focus-visible { outline-color: #111111; }
 
 /* ── 상태 줄(연결 상태·오류) ───────────────────── */
 .status { position: fixed; left: 40px; bottom: 36px; margin: 0; z-index: 5; font-size: 11px; letter-spacing: .02em; color: rgba(242,236,224,.45); pointer-events: none; max-width: 40vw; }
