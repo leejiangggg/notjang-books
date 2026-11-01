@@ -2,11 +2,14 @@
 :root {
   --ink: #f2ece0;
   --bg: #110000;
-  --font: 'AppleGothic', 'Apple SD Gothic Neo', 'Nanum Gothic', sans-serif;
+  --font: 'Noto Serif', 'Noto Serif KR', 'Noto Serif JP', 'Apple SD Gothic Neo', serif;
 }
+/* 일본어일 때는 한자를 일본 글꼴로 */
+html[lang="ja"] { --font: 'Noto Serif', 'Noto Serif JP', 'Noto Serif KR', serif; }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 body { background: var(--bg); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+body.light { background: #ffffff; color: #111111; }
 img { -webkit-user-drag: none; }
 
 /* ── 로고 ─────────────────────────────────────── */
@@ -25,6 +28,15 @@ h1.logo { pointer-events: none; }
 .seg .it svg { width: 22px; height: 22px; }
 .seg .div { width: 1px; height: 28px; margin: 0 8px; background: #3a3a3a; flex: none; }
 
+/* 흰 배경(다운로드) 버전 */
+body.light .seg { background: #ffffff; box-shadow: 0 8px 22px rgba(0,0,0,.10), inset 0 0 0 1px rgba(0,0,0,.12); }
+body.light .seg .pill { background: #111111; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+body.light .seg .it { color: #8a8a8a; }
+body.light .seg .it:hover { color: #333333; }
+body.light .seg .it.on, body.light .seg .it.on:hover { color: #ffffff; }
+body.light .seg .it:focus-visible { outline-color: #111111; }
+body.light .seg .div { background: #d9d9d9; }
+
 /* ── 언어 스위치 ─────────────────────────────── */
 .lang { position: fixed; right: 40px; top: 40px; display: flex; padding: 4px; border-radius: 999px; background: #1c1c1c; box-shadow: 0 8px 22px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.06); z-index: 8; }
 .lang .lpill { position: absolute; top: 4px; left: 4px; width: 46px; height: 40px; border-radius: 999px; background: #ffffff; transition: transform .42s cubic-bezier(.34,1.45,.5,1); }
@@ -32,6 +44,14 @@ h1.logo { pointer-events: none; }
 .lang .lb:hover { color: #d0d0d0; }
 .lang .lb.on, .lang .lb.on:hover { color: #111111; }
 .lang .lb:focus-visible { outline: 2px solid #ffffff; outline-offset: -3px; }
+.lang .lsel { display: none; }
+body.light .lang { background: #ffffff; box-shadow: 0 6px 18px rgba(0,0,0,.10), inset 0 0 0 1px rgba(0,0,0,.12); }
+body.light .lang .lpill { background: #111111; }
+body.light .lang .lb { color: #8a8a8a; }
+body.light .lang .lb:hover { color: #333333; }
+body.light .lang .lb.on, body.light .lang .lb.on:hover { color: #ffffff; }
+body.light .lang .lb:focus-visible { outline-color: #111111; }
+body.light .lang .lsel { background-color: #ffffff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1 3l4 4 4-4' fill='none' stroke='%23111' stroke-width='1.6'/%3E%3C/svg%3E"); color: #111111; box-shadow: 0 6px 18px rgba(0,0,0,.10), inset 0 0 0 1px rgba(0,0,0,.12); }
 
 /* ── 상태 줄(연결 상태·오류) ───────────────────── */
 .status { position: fixed; left: 40px; bottom: 36px; margin: 0; z-index: 5; font-size: 11px; letter-spacing: .02em; color: rgba(242,236,224,.45); pointer-events: none; max-width: 40vw; }
@@ -40,9 +60,13 @@ h1.logo { pointer-events: none; }
 
 /* ── 폰 폭 ───────────────────────────────────── */
 @media (max-width: 767px) {
-  .logo { left: 50%; top: 60px; transform: translateX(-50%); }
-  .logo img { width: 170px; }
+  .logo { left: 16px; top: 16px; }
+  .logo img { width: 120px; }
   .toolbar { bottom: 34px; }
-  .lang { right: auto; left: 50%; top: 138px; transform: translateX(-50%); }
+  /* 폰: 언어는 오른쪽 위 작은 드롭다운 */
+  .lang { right: 16px; top: 16px; padding: 0; background: none; box-shadow: none; }
+  .lang .lpill, .lang .lb { display: none; }
+  .lang .lsel { display: block; -webkit-appearance: none; appearance: none; height: 40px; padding: 0 30px 0 14px; border: 0; border-radius: 999px; background: #1c1c1c url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1 3l4 4 4-4' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center / 10px 10px; box-shadow: 0 8px 22px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.06); color: #ffffff; font: 800 12px/1 var(--font); letter-spacing: .06em; cursor: pointer; }
+  .lang .lsel:focus-visible { outline: 2px solid #ffffff; outline-offset: 2px; }
   .status { left: 16px; bottom: 100px; max-width: 80vw; }
 }

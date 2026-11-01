@@ -127,9 +127,22 @@
     $('#sig').textContent = L.sig;
   }
 
-  const reader = $('#reader');
-  reader.addEventListener('mousemove', (e) => reader.style.setProperty('--cy', e.clientY + 'px'));
+  // 글자가 돌아오는 띠: 데스크톱은 마우스 높이, 폰(또는 마우스를 아직 안 움직였을 때)은 화면 56% 높이. 문단마다 자기 기준으로 넣는다.
+  const pointer = matchMedia('(hover: hover) and (min-width: 768px)');
+  let bandY = null, raf = 0;
+  function paint() {
+    raf = 0;
+    const y = pointer.matches && bandY != null ? bandY : innerHeight * 0.56;
+    document.querySelectorAll('.kk').forEach((el) => {
+      el.style.setProperty('--ly', Math.round(y - el.getBoundingClientRect().top) + 'px');
+    });
+  }
+  const queue = () => { if (!raf) raf = requestAnimationFrame(paint); };
+  $('#reader').addEventListener('mousemove', (e) => { bandY = e.clientY; queue(); });
+  addEventListener('scroll', queue, { passive: true });
+  addEventListener('resize', queue);
 
-  NotjangLang.mount($('#lang'), render);
+  NotjangLang.mount($('#lang'), () => { render(); queue(); });
   render();
+  queue();
 })();

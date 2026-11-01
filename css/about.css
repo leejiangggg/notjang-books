@@ -1,4 +1,4 @@
-/* 소개: 어두운 종이 위 긴 글. 마우스 높이 아래로 글자가 떠오른다(폰에서는 그냥 보인다). */
+/* 소개: 어두운 종이 위 긴 글. 데스크톱은 마우스 높이, 폰은 화면 중간쯤의 띠 아래로 글자가 점에서 글자로 돌아온다. */
 body { background: #110000; color: #E6D8BE; }
 .reader { min-height: 100vh; }
 .reader main { max-width: 620px; margin: 0 auto; padding: 220px 24px 220px; }
@@ -18,19 +18,16 @@ body { background: #110000; color: #E6D8BE; }
 .dinos img:nth-child(3) { transform: rotate(-1deg); }
 .dinos img:hover { transform: translateY(-6px) rotate(0) scale(1.03); }
 
-@property --cy { syntax: '<length>'; inherits: true; initial-value: 0px; }
-.reader { transition: --cy .35s cubic-bezier(.2,.7,.2,1); }
-@media (hover: hover) and (min-width: 768px) {
-  .kk { color: transparent; -webkit-background-clip: text; background-clip: text; background-image: linear-gradient(to bottom, #E6D8BE 0, #E6D8BE calc(var(--cy) + 12px), rgba(230,216,190,0) calc(var(--cy) + 44px)), radial-gradient(circle, #E6D8BE 0 .85px, transparent 1.15px); background-attachment: fixed, scroll; background-repeat: no-repeat, repeat; background-size: 100% 100%, 3px 3px; }
-}
+@property --ly { syntax: '<length>'; inherits: false; initial-value: 0px; }
+.kk { display: block; transition: --ly .35s cubic-bezier(.2,.7,.2,1); color: transparent; -webkit-background-clip: text; background-clip: text; background-image: linear-gradient(to bottom, #E6D8BE 0, #E6D8BE calc(var(--ly) + 12px), rgba(230,216,190,0) calc(var(--ly) + 44px)), radial-gradient(circle, #E6D8BE 0 .85px, transparent 1.15px); background-repeat: no-repeat, repeat; background-size: 100% 100%, 3px 3px; }
 
 @media (max-width: 767px) {
-  .reader main { padding: 220px 28px 180px; }
+  .reader main { padding: 120px 28px 180px; }
   .intro { font-size: 17px; }
   .sec h2 { margin: 0 0 22px; padding-top: 24px; font-size: 16px; }
   .sec p { margin: 0 0 14px; font-size: 14px; line-height: 1.95; }
   .sec.s2 { margin-top: 72px; }
   .bigt { margin: 110px 0 40px; font-size: 26px; }
   .dinos { gap: 8px; margin: 20px 0 28px; }
-  .topfade { position: fixed; left: 0; right: 0; top: 0; height: 196px; z-index: 4; background: linear-gradient(#110000 78%, rgba(17,0,0,0)); pointer-events: none; }
+  .topfade { position: fixed; left: 0; right: 0; top: 0; height: 92px; z-index: 4; background: linear-gradient(#110000 60%, rgba(17,0,0,0)); pointer-events: none; }
 }

@@ -1,8 +1,6 @@
-/* 앱 다운로드: 검정 거리(다른 페이지와 같은 바탕). 그림은 흰 선으로 뒤집어 검정 종이에 찍은 리소처럼. */
-.stage { position: relative; width: 100%; height: 100vh; min-height: 640px; overflow: hidden; background: var(--bg); }
-.logo-link { position: fixed; left: 40px; top: 36px; z-index: 5; display: block; }
-.logo-link img { display: block; width: 260px; height: auto; }
-.car .body img, .obj img { filter: invert(1); }
+/* 앱 다운로드: 흰 바탕 거리. 스포츠카·트럭이 들어오고, 고르면 가게 앞까지 간다. */
+body { background: #ffffff; color: #111111; }
+.stage { position: relative; width: 100%; height: 100vh; min-height: 640px; overflow: hidden; background: #ffffff; }
 
 .world { position: absolute; top: 0; left: 0; width: 300%; height: 100%; transform: translateX(-33.3333%); }
 .world.go { transition: transform 2.6s cubic-bezier(.65,0,.35,1); }
@@ -12,19 +10,19 @@
 .car .body img { display: block; width: 100%; user-select: none; }
 .moving .body { animation: bob .16s ease-in-out infinite; }
 @keyframes bob { 0%,100% { transform: translateY(0) rotate(0) } 50% { transform: translateY(-2px) rotate(-.5deg) } }
-.spoke { position: absolute; transform: translate(-50%,-50%); aspect-ratio: 1; opacity: 0; background: linear-gradient(var(--ink),var(--ink)) center/100% 3px no-repeat, linear-gradient(var(--ink),var(--ink)) center/3px 100% no-repeat; transition: opacity .2s; }
+.spoke { position: absolute; transform: translate(-50%,-50%); aspect-ratio: 1; opacity: 0; background: linear-gradient(#111,#111) center/100% 3px no-repeat, linear-gradient(#111,#111) center/3px 100% no-repeat; transition: opacity .2s; }
 .moving .spoke { opacity: 1; animation: spin .22s linear infinite; }
 @keyframes spin { from { transform: translate(-50%,-50%) rotate(0) } to { transform: translate(-50%,-50%) rotate(360deg) } }
-.bubble { all: unset; box-sizing: border-box; position: absolute; left: 50%; bottom: calc(100% + 22px); white-space: nowrap; background: var(--bg); border: 2.5px solid var(--ink); border-radius: 24px; padding: 13px 22px; font-family: var(--font); font-weight: 800; font-size: 15px; color: var(--ink); cursor: pointer; box-shadow: 3px 4px 0 var(--ink); transform: translateX(-50%); animation: bubbleIn .5s cubic-bezier(.34,1.56,.64,1) both; transition: box-shadow .15s, translate .15s; }
+.bubble { all: unset; box-sizing: border-box; position: absolute; left: 50%; bottom: calc(100% + 22px); white-space: nowrap; background: #fff; border: 2.5px solid #111; border-radius: 24px; padding: 13px 22px; font-family: var(--font); font-weight: 800; font-size: 15px; color: #111; cursor: pointer; box-shadow: 3px 4px 0 #111; transform: translateX(-50%); animation: bubbleIn .5s cubic-bezier(.34,1.56,.64,1) both; transition: box-shadow .15s, translate .15s; }
 .bubble[hidden] { display: none; }
-.bubble::after { content: ""; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px; margin-left: -7px; background: var(--bg); border-right: 2.5px solid var(--ink); border-bottom: 2.5px solid var(--ink); transform: rotate(45deg); }
-.bubble:hover { translate: 0 -3px; box-shadow: 3px 7px 0 var(--ink); }
-.bubble:active { translate: 0 1px; box-shadow: 2px 2px 0 var(--ink); }
-.bubble:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.bubble::after { content: ""; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px; margin-left: -7px; background: #fff; border-right: 2.5px solid #111; border-bottom: 2.5px solid #111; transform: rotate(45deg); }
+.bubble:hover { translate: 0 -3px; box-shadow: 3px 7px 0 #111; }
+.bubble:active { translate: 0 1px; box-shadow: 2px 2px 0 #111; }
+.bubble:focus-visible { outline: 2px solid #111; outline-offset: 4px; }
 .truck .bubble { animation-delay: .18s; }
 @keyframes bubbleIn { from { opacity: 0; transform: translateX(-50%) translateY(10px) scale(.6) } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1) } }
-.back { all: unset; cursor: pointer; font-size: 13px; color: var(--ink); border-bottom: 1px solid var(--ink); padding: 4px 0; }
-.back:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.back { all: unset; cursor: pointer; font-size: 13px; color: #111; border-bottom: 1px solid #111; padding: 4px 0; }
+.back:focus-visible { outline: 2px solid #111; outline-offset: 4px; }
 .sports { z-index: 1; }
 .truck { z-index: 3; }
 .sports .bubble { bottom: calc(100% + 40px); left: 42%; }
@@ -32,8 +30,8 @@
 
 .obj { position: absolute; }
 .obj img { position: relative; display: block; width: 100%; user-select: none; }
-.shd { position: absolute; left: 6%; right: 6%; bottom: -12px; height: 28px; opacity: .6; pointer-events: none; background: radial-gradient(circle,#4a5fc1 0 1.15px,transparent 1.7px) 0 0/5px 5px; -webkit-mask: radial-gradient(closest-side,#000 35%,transparent 100%); mask: radial-gradient(closest-side,#000 35%,transparent 100%); }
-.shd::after { content: ""; position: absolute; inset: 0; transform: translate(3px,2px); background: radial-gradient(circle,#e8708f 0 .9px,transparent 1.4px) 2px 2px/5px 5px; opacity: .7; }
+.shd { position: absolute; left: 6%; right: 6%; bottom: -12px; height: 28px; opacity: .42; pointer-events: none; background: radial-gradient(circle,#4a5fc1 0 1.15px,transparent 1.7px) 0 0/5px 5px; -webkit-mask: radial-gradient(closest-side,#000 35%,transparent 100%); mask: radial-gradient(closest-side,#000 35%,transparent 100%); }
+.shd::after { content: ""; position: absolute; inset: 0; transform: translate(3px,2px); background: radial-gradient(circle,#e8708f 0 .9px,transparent 1.4px) 2px 2px/5px 5px; opacity: .55; }
 .car .shd { bottom: -10px; left: 4%; right: 2%; height: 30px; }
 .shd.house { left: -4%; right: -14%; bottom: -16px; height: 40px; }
 .pet .shd { left: 0; right: 0; bottom: -8px; height: 20px; }
@@ -42,12 +40,12 @@
 .dog img { animation: none; }
 @keyframes breathe { 0%,100% { transform: scale(1,1) } 50% { transform: scale(1.01,1.025) } }
 
-.qrb { position: absolute; z-index: 6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 16px 10px; background: var(--bg); border: 2.5px solid var(--ink); border-radius: 22px; box-shadow: 3px 4px 0 var(--ink); opacity: 0; transform: translateX(-50%) translateY(14px) scale(.6); transform-origin: 50% 100%; pointer-events: none; transition: opacity .25s, transform .25s; color: var(--ink); text-decoration: none; }
-.qrb::after { content: ""; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px; margin-left: -7px; background: var(--bg); border-right: 2.5px solid var(--ink); border-bottom: 2.5px solid var(--ink); transform: rotate(45deg); }
+.qrb { position: absolute; z-index: 6; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 16px 10px; background: #fff; border: 2.5px solid #111; border-radius: 22px; box-shadow: 3px 4px 0 #111; opacity: 0; transform: translateX(-50%) translateY(14px) scale(.6); transform-origin: 50% 100%; pointer-events: none; transition: opacity .25s, transform .25s; color: #111; text-decoration: none; }
+.qrb::after { content: ""; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px; margin-left: -7px; background: #fff; border-right: 2.5px solid #111; border-bottom: 2.5px solid #111; transform: rotate(45deg); }
 .qrb.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); pointer-events: auto; transition: opacity .3s, transform .55s cubic-bezier(.34,1.56,.64,1); }
-.qrb img { display: block; width: 140px; height: 140px; object-fit: contain; background: #fff; border-radius: 10px; padding: 6px; }
+.qrb img { display: block; width: 140px; height: 140px; object-fit: contain; }
 .qrb p { margin: 0; font-size: 13px; font-weight: 800; }
-.qrb .enter { display: none; color: var(--ink); text-decoration: none; }
+.qrb .enter { display: none; color: #111; text-decoration: none; }
 
 /* 자리: 왼쪽 3분의 1이 구글 가게, 오른쪽 3분의 1이 애플 가게 */
 .shop-google { left: calc(16.6667% - 150px); bottom: calc(26% + 84px); width: 250px; z-index: 1; }
@@ -59,8 +57,6 @@
 
 /* 폰: QR 대신 가게로 들어가는 링크 */
 @media (max-width: 767px) {
-  .logo-link { left: 50%; top: 60px; transform: translateX(-50%); }
-  .logo-link img { width: 170px; }
   .bubble { padding: 10px 16px; font-size: 13px; }
   .sports .bubble { bottom: calc(100% + 18px); left: 68%; }
   .truck .bubble { bottom: calc(100% + 6px); left: 50%; }
@@ -76,6 +72,6 @@
   .shop-apple { left: calc(83.3333% - 24px); bottom: calc(30% + 56px); width: 156px; }
   .cat { left: calc(83.3333% + 98px); bottom: calc(30% - 44px); width: 90px; }
   #qrApple { left: calc(83.3333% + 54px); bottom: calc(30% + 234px); }
-  .qrb.show:hover { translate: 0 -3px; box-shadow: 3px 7px 0 var(--ink); }
-  .qrb.show:active { translate: 0 1px; box-shadow: 2px 2px 0 var(--ink); }
+  .qrb.show:hover { translate: 0 -3px; box-shadow: 3px 7px 0 #111; }
+  .qrb.show:active { translate: 0 1px; box-shadow: 2px 2px 0 #111; }
 }

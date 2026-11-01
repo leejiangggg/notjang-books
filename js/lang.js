@@ -14,8 +14,10 @@ window.NotjangLang = (function () {
   function mount(container, onChange) {
     if (!container) return;
     container.innerHTML = '<span class="lpill" aria-hidden="true"></span>' +
-      KEYS.map((k) => '<button type="button" class="lb" data-lang="' + k + '">' + k + '</button>').join('');
+      KEYS.map((k) => '<button type="button" class="lb" data-lang="' + k + '">' + k + '</button>').join('') +
+      '<select class="lsel" aria-label="Language">' + KEYS.map((k) => '<option value="' + k + '">' + k + '</option>').join('') + '</select>';
     const pill = container.querySelector('.lpill');
+    const sel = container.querySelector('.lsel');
     const apply = (lang) => {
       pill.style.transform = 'translateX(' + (KEYS.indexOf(lang) * 46) + 'px)';
       container.querySelectorAll('.lb').forEach((b) => {
@@ -23,14 +25,14 @@ window.NotjangLang = (function () {
         b.classList.toggle('on', on);
         b.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
+      sel.value = lang;
       document.documentElement.lang = CODES[lang];
     };
+    const choose = (lang) => { set(lang); apply(lang); onChange && onChange(lang); };
+    sel.addEventListener('change', () => choose(sel.value));
     container.addEventListener('click', (e) => {
       const b = e.target.closest('.lb');
-      if (!b) return;
-      set(b.dataset.lang);
-      apply(b.dataset.lang);
-      onChange && onChange(b.dataset.lang);
+      if (b) choose(b.dataset.lang);
     });
     apply(get());
   }
