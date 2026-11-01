@@ -10,6 +10,9 @@ body { background: #110000; color: #E6D8BE; }
 .sec p { margin: 0 0 16px; font-size: 15px; line-height: 2; color: rgba(230,216,190,.9); }
 .sec.s2 { margin-top: 96px; }
 .sig { margin-top: 28px; color: #E6D8BE; }
+.contact { margin-top: 40px; font-size: 13px; color: rgba(230,216,190,.6); }
+.contact a { color: #E6D8BE; }
+.contact[hidden] { display: none; }
 .bigt { margin: 160px 0 56px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
 .dinos { display: flex; gap: 16px; margin: 28px 0 40px; align-items: flex-start; }
 .dinos img { display: block; flex: 1 1 0; min-width: 0; box-shadow: 0 10px 26px rgba(0,0,0,.5); transition: transform .35s cubic-bezier(.2,.7,.2,1); }

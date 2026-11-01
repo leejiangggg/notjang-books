@@ -42,6 +42,7 @@ window.NotjangShop = (function () {
           id: groupID,
           no: Number(field(rec, 'number') || 0),
           author: String(field(rec, 'authorName') || ''),
+          authorKey: String((rec.created && rec.created.userRecordName) || ''),
           date: new Date(Number(field(rec, 'publishedAt') || rec.created.timestamp)),
           shopDate: new Date(Number(field(rec, 'shopDate') || rec.created.timestamp)),
           sheets: []

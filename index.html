@@ -8,8 +8,8 @@
 <meta name="theme-color" content="#110000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;800&family=Noto+Serif+JP:wght@400;700;800&display=swap">
-<link rel="stylesheet" href="css/site.css?v=10">
-<link rel="stylesheet" href="css/main.css?v=10">
+<link rel="stylesheet" href="css/site.css?v=11">
+<link rel="stylesheet" href="css/main.css?v=11">
 </head>
 <body>
 
@@ -30,12 +30,14 @@
 </div>
 
 <p id="status" class="status"></p>
+<p id="toast" class="toast" role="status" aria-live="polite"></p>
 
 <div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="낱장 크게 보기" tabindex="-1" hidden>
   <div id="stack" class="stackw">
     <button type="button" id="backpg" class="backpg" aria-label="다른 장 보기" hidden><img src="" alt="" draggable="false"></button>
     <img id="front" draggable="false" class="front" src="" alt="" draggable="false">
   </div>
+  <div id="rbox" class="rbox" role="dialog" aria-modal="true" hidden><p id="rq"></p><div id="rlist"></div></div>
   <p id="date" class="date"></p>
   <p id="pos" class="pos" hidden></p>
   <div id="actions" class="actions">
@@ -43,14 +45,17 @@
     <div id="menu" class="menu" role="menu" hidden>
       <a id="dl" class="vbtn" role="menuitem" href="#" download><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10.5l5 5 5-5"></path><path d="M5 19.5h14"></path></svg><span id="dlL"></span></a>
       <button type="button" id="like" class="vbtn like" role="menuitemcheckbox" aria-checked="false"><svg id="heart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.3a4.3 4.3 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"></path></svg><span id="likeL"></span><span id="likeN" class="n"></span></button>
+      <span class="sep" aria-hidden="true"></span>
+      <button type="button" id="report" class="vbtn" role="menuitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"></path><path d="M5 4h12l-2 4 2 4H5"></path></svg><span id="reportL"></span></button>
+      <button type="button" id="block" class="vbtn" role="menuitem"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M6.5 6.5l11 11"></path></svg><span id="blockL"></span></button>
     </div>
   </div>
 </div>
 
-<script src="config.js?v=10"></script>
-<script src="js/lang.js?v=10"></script>
-<script src="js/shop.js?v=10"></script>
-<script src="js/likes.js?v=10"></script>
-<script src="js/main.js?v=10"></script>
+<script src="config.js?v=11"></script>
+<script src="js/lang.js?v=11"></script>
+<script src="js/shop.js?v=11"></script>
+<script src="js/likes.js?v=11"></script>
+<script src="js/main.js?v=11"></script>
 </body>
 </html>

@@ -33,5 +33,25 @@ window.NotjangLikes = (function () {
     return (await r.json()).n;
   }
 
-  return { enabled, counts, set };
+  /** 신고. 서버가 없어도 호출은 되고(아무 일 없음), 가리는 건 호출한 쪽이 한다. */
+  async function report(id, reason, author) {
+    if (!url) return null;
+    const r = await fetch(url + '/report', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, uid, reason, author }) });
+    if (!r.ok) throw new Error('report ' + r.status);
+    return r.json();
+  }
+
+  /** 신고가 쌓여 모두에게 가려진 작품 id 목록 */
+  async function hidden(ids) {
+    if (!url || !ids.length) return [];
+    const out = [];
+    for (let i = 0; i < ids.length; i += 100) {
+      const r = await fetch(url + '/hidden?ids=' + encodeURIComponent(ids.slice(i, i + 100).join(',')));
+      if (!r.ok) throw new Error('hidden ' + r.status);
+      out.push(...await r.json());
+    }
+    return out;
+  }
+
+  return { enabled, counts, set, report, hidden };
 })();

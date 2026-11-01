@@ -26,7 +26,8 @@
         '그러니까 당신의 한 장도 무엇이든 괜찮아요. 오늘 먹은 빵 이름이어도, 좋아하는 버스 노선이어도, 공룡이어도. 사실 몇 줄 적고 마지막에 한 줄만 붙여보세요.',
         '그 한 줄에, 생각보다 당신이 많이 있을 거예요.'
       ],
-      sig: '— 낱장북스 에디터'
+      sig: '— 낱장북스 에디터',
+      contact: '신고와 문의는'
     },
     EN: {
       intro: ['Hello.', 'Welcome to NOTJANG BOOKS.', 'NOTJANG BOOKS is an online bookshop.', 'There is no storefront, and no counter.', 'Instead, every day we display the single pages people have written.', 'We believe a line written by your own hand, however clumsy, is all the more precious these days.', 'Because while writing, you finally learn what you think,', 'and while reading someone else’s page, you get to borrow, for a while, a day you could never reach alone.', 'Your day, too, can become a one-page story.', 'Leave your page at NOTJANG BOOKS.'],
@@ -53,7 +54,8 @@
         'So your page can be about anything. The name of the bread you ate today, your favorite bus route, a dinosaur. Just write down a few facts and add one line at the end.',
         'In that one line, there will be more of you than you think.'
       ],
-      sig: '— The NOTJANG BOOKS Editor'
+      sig: '— The NOTJANG BOOKS Editor',
+      contact: 'Reports and questions:'
     },
     JP: {
       intro: ['こんにちは。', 'NOTJANG BOOKSへようこそ。', 'NOTJANG BOOKSはインターネットの本屋です。', '店舗も、レジもありません。', 'そのかわり、毎日みんなが書いた一枚一枚を並べています。', 'つたなくても、自分の手で書いた一行が、いまはいっそう尊いと信じています。', '書いているうちに、ようやく自分が何を考えているのかがわかり、', '誰かの一枚を読むあいだ、ひとりでは辿り着けない一日を、しばらく借りて生きられるからです。', 'あなたの一日も、一枚の物語になれます。', 'NOTJANG BOOKSに、あなたの一枚を残してください。'],
@@ -80,7 +82,8 @@
         'だから、あなたの一枚も何だってかまいません。今日食べたパンの名前でも、好きなバスの路線でも、恐竜でも。事実を何行か書いて、最後に一行だけ添えてみてください。',
         'その一行に、思っているよりもたくさんのあなたがいるはずです。'
       ],
-      sig: '— NOTJANG BOOKS 編集者'
+      sig: '— NOTJANG BOOKS 編集者',
+      contact: '通報・お問い合わせ:'
     },
     DE: {
       intro: ['Hallo.', 'Willkommen bei NOTJANG BOOKS.', 'NOTJANG BOOKS ist eine Buchhandlung im Internet.', 'Es gibt keinen Laden und keine Kasse.', 'Stattdessen legen wir jeden Tag die einzelnen Seiten aus, die Menschen geschrieben haben.', 'Wir glauben, dass eine Zeile von eigener Hand, so unbeholfen sie sein mag, heute umso kostbarer ist.', 'Denn beim Schreiben erfährt man endlich, was man eigentlich denkt,', 'und beim Lesen der Seite eines anderen darf man für eine Weile einen Tag leben, den man allein nie erreicht hätte.', 'Auch Ihr Tag kann zu einer Geschichte auf einer Seite werden.', 'Hinterlassen Sie Ihre Seite bei NOTJANG BOOKS.'],
@@ -107,7 +110,8 @@
         'Ihre Seite darf also von allem handeln. Vom Namen des Brots, das Sie heute gegessen haben, von Ihrer liebsten Buslinie, von einem Dinosaurier. Schreiben Sie ein paar Fakten auf und fügen Sie am Ende nur eine Zeile hinzu.',
         'In dieser einen Zeile steckt mehr von Ihnen, als Sie denken.'
       ],
-      sig: '— Die Redaktion von NOTJANG BOOKS'
+      sig: '— Die Redaktion von NOTJANG BOOKS',
+      contact: 'Meldungen und Fragen:'
     }
   };
 
@@ -125,6 +129,9 @@
     $('#s2a').innerHTML = paras(L.s2.slice(0, 4));
     $('#s2b').innerHTML = paras(L.s2.slice(4));
     $('#sig').textContent = L.sig;
+    const mail = (window.NOTJANG_CONFIG && NOTJANG_CONFIG.contactEmail) || '';
+    const c = $('#contact'); c.hidden = !mail;
+    if (mail) c.innerHTML = esc(L.contact) + ' <a href="mailto:' + esc(mail) + '">' + esc(mail) + '</a>';
   }
 
   // 글자가 돌아오는 띠: 데스크톱은 마우스 높이, 폰(또는 마우스를 아직 안 움직였을 때)은 화면 56% 높이. 문단마다 자기 기준으로 넣는다.
