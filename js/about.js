@@ -27,7 +27,6 @@
         '그 한 줄에, 생각보다 당신이 많이 있을 거예요.'
       ],
       sig: '— 낱장북스 에디터',
-      contact: '신고와 문의는',
       legal: '개인정보 처리방침'
     },
     EN: {
@@ -56,7 +55,6 @@
         'In that one line, there will be more of you than you think.'
       ],
       sig: '— The NOTJANG BOOKS Editor',
-      contact: 'Reports and questions:',
       legal: 'Privacy policy'
     },
     JP: {
@@ -85,7 +83,6 @@
         'その一行に、思っているよりもたくさんのあなたがいるはずです。'
       ],
       sig: '— NOTJANG BOOKS 編集者',
-      contact: '通報・お問い合わせ:',
       legal: 'プライバシーポリシー'
     },
     DE: {
@@ -114,7 +111,6 @@
         'In dieser einen Zeile steckt mehr von Ihnen, als Sie denken.'
       ],
       sig: '— Die Redaktion von NOTJANG BOOKS',
-      contact: 'Meldungen und Fragen:',
       legal: 'Datenschutz'
     }
   };
@@ -134,9 +130,8 @@
     $('#s2b').innerHTML = paras(L.s2.slice(4));
     $('#sig').textContent = L.sig;
     $('#legal').textContent = L.legal;
-    const mail = (window.NOTJANG_CONFIG && NOTJANG_CONFIG.contactEmail) || '';
-    const c = $('#contact'); c.hidden = !mail;
-    if (mail) c.innerHTML = esc(L.contact) + ' <a href="mailto:' + esc(mail) + '">' + esc(mail) + '</a>';
+    const mail = (window.NOTJANG_CONFIG && NOTJANG_CONFIG.contactEmail) || 'unrulermatter@gmail.com';
+    const m = $('#mail'); m.textContent = mail; m.href = 'mailto:' + mail;
   }
 
   // 글자가 돌아오는 띠: 데스크톱은 마우스 높이, 폰(또는 마우스를 아직 안 움직였을 때)은 화면 56% 높이. 문단마다 자기 기준으로 넣는다.

@@ -13,6 +13,7 @@ body { background: #110000; color: #E6D8BE; }
 .contact { margin-top: 40px; font-size: 13px; color: rgba(230,216,190,.6); }
 .contact a { color: #E6D8BE; }
 .contact[hidden] { display: none; }
+.contact.copy { margin-top: 6px; }
 .contact.legal { margin-top: 12px; }
 .bigt { margin: 160px 0 56px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
 .dinos { display: flex; gap: 16px; margin: 28px 0 40px; align-items: flex-start; }
