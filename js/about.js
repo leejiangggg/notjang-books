@@ -27,7 +27,8 @@
         '그 한 줄에, 생각보다 당신이 많이 있을 거예요.'
       ],
       sig: '— 낱장북스 에디터',
-      contact: '신고와 문의는'
+      contact: '신고와 문의는',
+      legal: '개인정보 처리방침'
     },
     EN: {
       intro: ['Hello.', 'Welcome to NOTJANG BOOKS.', 'NOTJANG BOOKS is an online bookshop.', 'There is no storefront, and no counter.', 'Instead, every day we display the single pages people have written.', 'We believe a line written by your own hand, however clumsy, is all the more precious these days.', 'Because while writing, you finally learn what you think,', 'and while reading someone else’s page, you get to borrow, for a while, a day you could never reach alone.', 'Your day, too, can become a one-page story.', 'Leave your page at NOTJANG BOOKS.'],
@@ -55,7 +56,8 @@
         'In that one line, there will be more of you than you think.'
       ],
       sig: '— The NOTJANG BOOKS Editor',
-      contact: 'Reports and questions:'
+      contact: 'Reports and questions:',
+      legal: 'Privacy policy'
     },
     JP: {
       intro: ['こんにちは。', 'NOTJANG BOOKSへようこそ。', 'NOTJANG BOOKSはインターネットの本屋です。', '店舗も、レジもありません。', 'そのかわり、毎日みんなが書いた一枚一枚を並べています。', 'つたなくても、自分の手で書いた一行が、いまはいっそう尊いと信じています。', '書いているうちに、ようやく自分が何を考えているのかがわかり、', '誰かの一枚を読むあいだ、ひとりでは辿り着けない一日を、しばらく借りて生きられるからです。', 'あなたの一日も、一枚の物語になれます。', 'NOTJANG BOOKSに、あなたの一枚を残してください。'],
@@ -83,7 +85,8 @@
         'その一行に、思っているよりもたくさんのあなたがいるはずです。'
       ],
       sig: '— NOTJANG BOOKS 編集者',
-      contact: '通報・お問い合わせ:'
+      contact: '通報・お問い合わせ:',
+      legal: 'プライバシーポリシー'
     },
     DE: {
       intro: ['Hallo.', 'Willkommen bei NOTJANG BOOKS.', 'NOTJANG BOOKS ist eine Buchhandlung im Internet.', 'Es gibt keinen Laden und keine Kasse.', 'Stattdessen legen wir jeden Tag die einzelnen Seiten aus, die Menschen geschrieben haben.', 'Wir glauben, dass eine Zeile von eigener Hand, so unbeholfen sie sein mag, heute umso kostbarer ist.', 'Denn beim Schreiben erfährt man endlich, was man eigentlich denkt,', 'und beim Lesen der Seite eines anderen darf man für eine Weile einen Tag leben, den man allein nie erreicht hätte.', 'Auch Ihr Tag kann zu einer Geschichte auf einer Seite werden.', 'Hinterlassen Sie Ihre Seite bei NOTJANG BOOKS.'],
@@ -111,7 +114,8 @@
         'In dieser einen Zeile steckt mehr von Ihnen, als Sie denken.'
       ],
       sig: '— Die Redaktion von NOTJANG BOOKS',
-      contact: 'Meldungen und Fragen:'
+      contact: 'Meldungen und Fragen:',
+      legal: 'Datenschutz'
     }
   };
 
@@ -129,6 +133,7 @@
     $('#s2a').innerHTML = paras(L.s2.slice(0, 4));
     $('#s2b').innerHTML = paras(L.s2.slice(4));
     $('#sig').textContent = L.sig;
+    $('#legal').textContent = L.legal;
     const mail = (window.NOTJANG_CONFIG && NOTJANG_CONFIG.contactEmail) || '';
     const c = $('#contact'); c.hidden = !mail;
     if (mail) c.innerHTML = esc(L.contact) + ' <a href="mailto:' + esc(mail) + '">' + esc(mail) + '</a>';
