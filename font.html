@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>낱장북스 · 내 손글씨 폰트</title>
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="내 손글씨 폰트 · 낱장북스">
+<meta property="og:description" content="격자판에 펜으로 쓰고 찍어 올리면 내 글씨가 폰트가 됩니다.">
+<meta property="og:image" content="https://notjangbooks.com/assets/og.png">
+<meta property="og:url" content="https://notjangbooks.com/font.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;800&family=Noto+Serif+JP:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="css/site.css?v=20">
+<link rel="stylesheet" href="css/font.css?v=20">
+</head>
+<body class="light">
+
+<a href="index.html" class="logo" aria-label="NOTJANG BOOOKS"><img src="assets/logo-light.png" alt="NOTJANG BOOOKS"></a>
+<div id="lang" class="lang" role="group" aria-label="Language"></div>
+
+<main class="fm">
+  <h1 id="h1"></h1>
+  <p id="lead" class="lead"></p>
+
+  <section class="step">
+    <h2 id="s1"></h2>
+    <p id="s1p"></p>
+    <button type="button" id="print" class="btn"></button>
+    <div id="sheets" class="sheets"></div>
+  </section>
+
+  <section class="step">
+    <h2 id="s2"></h2>
+    <p id="s2p"></p>
+    <div id="uploads" class="uploads"></div>
+  </section>
+
+  <section class="step">
+    <h2 id="s3"></h2>
+    <p id="s3p"></p>
+    <button type="button" id="make" class="btn" disabled></button>
+    <p id="made" class="made"></p>
+    <div id="result" class="result" hidden>
+      <h3 id="sampleh"></h3>
+      <div class="paper"><p id="sampleout" class="hand" data-def="오늘 찍은 사진 한 장에 몇 줄을 적으면 낱장 한 장이 됩니다. Put a few lines on today's photo. 1234567890">오늘 찍은 사진 한 장에 몇 줄을 적으면 낱장 한 장이 됩니다. Put a few lines on today's photo. 1234567890</p></div>
+      <input id="sampletext" class="sampletext" type="text">
+      <button type="button" id="download" class="btn"></button>
+      <p id="after" class="after"></p>
+    </div>
+  </section>
+
+  <p class="contact legal"><a id="legal" href="privacy.html"></a></p>
+</main>
+
+<div class="toolbar" role="toolbar" aria-label="Navigation">
+  <div class="seg">
+    <span class="pill" aria-hidden="true" style="transform: translateX(153px)"></span>
+    <a class="it" href="index.html" aria-label="세로 보기" title="세로 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4.5" width="16" height="6"></rect><rect x="4" y="13.5" width="16" height="6"></rect></svg></a>
+    <a class="it" href="index.html" aria-label="사방 보기" title="사방 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></a>
+    <span class="div" aria-hidden="true"></span>
+    <a class="it" href="about.html" aria-label="About" title="About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M8 8.5V5h8v6h-4v3.5"></path><rect x="11" y="18" width="2" height="2" fill="currentColor" stroke="none"></rect></svg></a>
+    <a class="it" href="download.html" aria-label="Download" title="Download"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10l5 5 5-5"></path><path d="M5 19h14"></path></svg></a>
+  </div>
+</div>
+
+<script src="js/vendor/opentype.min.js"></script>
+<script src="js/lang.js?v=20"></script>
+<script src="js/font.js?v=20"></script>
+</body>
+</html>

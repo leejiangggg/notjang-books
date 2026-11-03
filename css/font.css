@@ -1,0 +1,66 @@
+/* 손글씨 폰트 메이커: 흰 종이 위 세 단계. 격자판은 mm 단위로 그려서 화면에서는 줄여 보고 인쇄하면 실제 크기. */
+body.light { background: #ffffff; color: #111111; }
+.fm { max-width: 640px; margin: 0 auto; padding: 140px 24px 200px; }
+.fm h1 { margin: 0 0 14px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+.lead { margin: 0 0 56px; font-size: 16px; line-height: 1.8; color: #444; }
+.step { margin-top: 56px; padding-top: 24px; border-top: 1px solid #e3e3e3; }
+.step h2 { margin: 0 0 10px; font-size: 18px; font-weight: 800; }
+.step > p { margin: 0 0 18px; font-size: 14px; line-height: 1.8; color: #555; }
+.btn { all: unset; display: inline-block; padding: 12px 22px; border-radius: 999px; background: #111; color: #fff; font: 700 14px/1 var(--font); cursor: pointer; }
+.btn:disabled { background: #d6d6d6; color: #888; cursor: default; }
+.btn:focus-visible { outline: 2px solid #111; outline-offset: 3px; }
+.lnk { all: unset; color: #e0483e; cursor: pointer; text-decoration: underline; font-size: inherit; }
+
+/* 격자판 */
+.sheets { margin-top: 22px; display: flex; flex-direction: column; gap: 16px; }
+.sheet { position: relative; width: 210mm; height: 297mm; background: #fff; box-shadow: 0 0 0 1px #e3e3e3, 0 10px 30px rgba(0,0,0,.08); overflow: hidden; color: #111; }
+.sheet .mark { position: absolute; display: block; background: #000; }
+.sheet .shead { position: absolute; left: 50mm; right: 50mm; top: 11mm; margin: 0; text-align: center; font-size: 3.2mm; letter-spacing: .04em; color: #333; }
+.sheet .sfoot { position: absolute; left: 25mm; right: 25mm; top: 256mm; margin: 0; font-size: 3mm; line-height: 1.5; color: #666; }
+.sheet .cell { position: absolute; border: 0.25mm solid #c9c9c9; }
+.sheet .lab { position: absolute; left: 0; top: -3.4mm; font-size: 2.6mm; line-height: 1; color: #777; font-family: var(--font); white-space: nowrap; }
+.sheet .lab small { margin-left: 1mm; font-size: 2.3mm; color: #aaa; }
+
+/* 사진 */
+.uploads { display: flex; flex-direction: column; gap: 28px; }
+.drop { display: flex; align-items: center; justify-content: center; height: 120px; border: 1.5px dashed #bbb; border-radius: 14px; font-size: 14px; color: #444; cursor: pointer; }
+.drop input { display: none; }
+.drop:hover { border-color: #111; }
+.view .photo { display: block; max-width: 100%; height: auto; border-radius: 10px; touch-action: none; cursor: crosshair; }
+.view .msg { margin: 12px 0 10px; font-size: 13px; line-height: 1.7; color: #555; }
+.thumbs { display: flex; flex-wrap: wrap; gap: 4px; }
+.th { width: 40px; text-align: center; }
+.th canvas { display: block; width: 40px; height: 40px; border: 1px solid #eee; image-rendering: pixelated; }
+.th span { display: block; font-size: 9px; line-height: 1.6; color: #999; }
+.th.none canvas { background: #fff3f3; border-color: #f3c9c9; }
+.emptyn { width: 100%; margin: 8px 0 0; font-size: 12px; color: #999; }
+
+/* 결과 */
+.made { margin: 14px 0 0; font-size: 13px; color: #555; }
+.result h3 { margin: 28px 0 12px; font-size: 14px; font-weight: 700; }
+.paper { padding: 28px 30px; background: #FFF3E6; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+.hand { margin: 0; font-family: 'NotjangHandPreview', var(--font); font-size: 30px; line-height: 1.55; color: #1C1B19; word-break: keep-all; overflow-wrap: anywhere; }
+.sampletext { width: 100%; margin: 14px 0 20px; padding: 12px 14px; border: 1px solid #ccc; border-radius: 10px; font: 15px var(--font); }
+.after { margin: 14px 0 0; font-size: 13px; line-height: 1.7; color: #555; }
+.contact.legal { margin-top: 96px; font-size: 13px; }
+.contact.legal a { color: #111; }
+
+@media (max-width: 767px) {
+  .fm { padding: 96px 20px 180px; }
+  .fm h1 { font-size: 26px; }
+}
+
+/* 인쇄: 격자판 두 장만, 실제 크기 */
+@media print {
+  @page { size: A4; margin: 0; }
+  body, body.light { background: #fff; }
+  .logo, .lang, .toolbar, .fm > *:not(.step:first-of-type), .step h2, .step > p, .btn, .contact { display: none !important; }
+  .fm { max-width: none; padding: 0; margin: 0; }
+  .step { margin: 0; padding: 0; border: 0; }
+  .sheets { margin: 0; gap: 0; display: block; }
+  .sheet { zoom: 1 !important; box-shadow: none; page-break-after: always; break-after: page; }
+  .sheet .mark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* 이 페이지는 툴바의 어느 칸도 아니다 */
+.toolbar .pill { display: none; }
