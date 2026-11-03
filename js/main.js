@@ -49,15 +49,18 @@
     if (!works.length) return;
     const m = isMobile();
     cv.cw = m ? 190 : 300; cv.ch = m ? 290 : 420;
-    // 작품은 한 번씩만. 몇 장이면 몇 장만 흩어 놓고, 많아지면 끌어서 둘러본다.
-    cv.cols = Math.min(m ? 3 : 7, works.length);
-    cv.rows = Math.ceil(works.length / cv.cols);
+    // 작품은 한 번씩만. 화면 모양에 맞춰 사방으로 흩어 놓고(한 줄이 아니라 덩어리로), 많아지면 끌어서 둘러본다.
     const vw = plane.clientWidth || innerWidth, vh = plane.clientHeight || innerHeight;
+    const n = works.length;
+    const fit = Math.round(Math.sqrt(n * (vw / vh) * (cv.ch / cv.cw)));   // 덩어리 비율 ≈ 화면 비율
+    cv.cols = Math.max(1, Math.min(m ? 3 : 7, n <= 2 ? n : Math.max(2, fit), n));
+    cv.rows = Math.ceil(n / cv.cols);
     cv.W = cv.cols * cv.cw + (m ? 24 : 40); cv.H = cv.rows * cv.ch + (m ? 150 : 210);
     cv.vw = vw; cv.vh = vh;
     works.forEach((w, k) => {
       const c = k % cv.cols, r = Math.floor(k / cv.cols);
-      const bx = c * cv.cw + (m ? 24 : 40), by = r * cv.ch + (c % 2 ? (m ? 150 : 210) : (m ? 30 : 40));
+      const jx = ((k * 7) % 5 - 2) * (m ? 4 : 9), jy = ((k * 11) % 7 - 3) * (m ? 4 : 8);   // 자리마다 조금씩 어긋나게
+      const bx = c * cv.cw + (m ? 24 : 40) + jx, by = r * cv.ch + (c % 2 ? (m ? 150 : 210) : (m ? 30 : 40)) + jy;
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'tile' + (isAdmin() && isHid(w) ? ' hid' : '');
       b.setAttribute('aria-label', '낱장 ' + w.no + '번 크게 보기');
