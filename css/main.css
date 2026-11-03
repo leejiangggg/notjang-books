@@ -82,3 +82,9 @@ body.vertical-mode { overflow: auto; }
   .viewer .actions { top: calc(env(safe-area-inset-top, 40px) + 12px); right: 16px; }
     .front { height: auto; width: 320px; max-height: 520px; cursor: grab; touch-action: none; }
 }
+
+/* 관리자 모드: 숨겨진 작품도 보이되 흐리게. 메뉴의 관리자 항목은 분홍. */
+.tile.hid, .vsheet.hid { opacity: .32; }
+.tile.hid::after, .vsheet.hid::after { content: 'HIDDEN'; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%) rotate(-12deg); padding: 4px 10px; border: 1.5px solid #e8708f; color: #e8708f; font: 700 12px/1 "Nanum Gothic Coding", monospace; letter-spacing: .12em; background: rgba(22,22,22,.7); pointer-events: none; }
+.viewer .menu .adm { color: #e8708f; }
+.adminbar { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 60; padding: 6px 12px; border-radius: 999px; background: #e8708f; color: #161616; font: 700 11px/1 "Nanum Gothic Coding", monospace; letter-spacing: .14em; pointer-events: none; }

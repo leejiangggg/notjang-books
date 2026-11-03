@@ -53,5 +53,20 @@ window.NotjangLikes = (function () {
     return out;
   }
 
-  return { enabled, counts, set, report, hidden };
+  /** 관리자 키 확인. 맞으면 true. */
+  async function adminCheck(key) {
+    if (!url || !key) return false;
+    const r = await fetch(url + '/admin/check?key=' + encodeURIComponent(key));
+    return r.ok;
+  }
+
+  /** 관리자가 바로 숨기기 / 다시 보이기 (모두에게). */
+  async function adminHide(id, on, key) {
+    if (!url) return null;
+    const r = await fetch(url + '/admin/hide', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key, id, on }) });
+    if (!r.ok) throw new Error('admin ' + r.status);
+    return r.json();
+  }
+
+  return { enabled, counts, set, report, hidden, adminCheck, adminHide };
 })();
