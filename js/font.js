@@ -138,6 +138,14 @@
       const side = Math.max(bw, bh);
       if (side < sw * 0.012 || side > sw * 0.09) continue;
       if (n / (bw * bh) < 0.55 || bw / bh < 0.6 || bw / bh > 1.6) continue;
+      // 진짜 마커는 안이 아주 검고 둘레(종이)가 밝다. 카펫·책상 같은 어두운 바탕 조각을 거른다
+      let inside = 0, ic = 0, ring = 0, rc = 0;
+      const m = Math.max(2, Math.round(side * 0.7));
+      for (let y = Math.max(0, y0 - m); y <= Math.min(sh - 1, y1 + m); y++) for (let x = Math.max(0, x0 - m); x <= Math.min(sw - 1, x1 + m); x++) {
+        if (x >= x0 && x <= x1 && y >= y0 && y <= y1) { inside += g[y * sw + x]; ic++; } else { ring += g[y * sw + x]; rc++; }
+      }
+      inside /= ic; ring /= Math.max(1, rc);
+      if (inside > 110 || ring - inside < 70) continue;
       comps.push({ cx: sx / n, cy: sy / n, side, n });
     }
     const corners = [[0, 0], [sw, 0], [0, sh], [sw, sh]];
@@ -145,14 +153,21 @@
     corners.forEach(([cx, cy]) => {
       let best = null, bd = Infinity;
       comps.forEach((c) => {
+        // 그 귀퉁이 쪽 절반에 있는 것만
+        if ((cx ? c.cx < sw / 2 : c.cx > sw / 2) || (cy ? c.cy < sh / 2 : c.cy > sh / 2)) return;
         const d = Math.hypot(c.cx - cx, c.cy - cy) - c.side * 2;   // 큰 네모(진짜 마커)를 쪽 번호 네모보다 우선
         if (d < bd) { bd = d; best = c; }
       });
-      if (!best || bd > Math.hypot(sw, sh) * 0.35) { ok = false; out.push([cx ? w * 0.9 : w * 0.1, cy ? h * 0.93 : h * 0.07]); }
+      if (!best) { ok = false; out.push([cx ? w * 0.9 : w * 0.1, cy ? h * 0.93 : h * 0.07]); }
       else out.push([best.cx * s + s / 2, best.cy * s + s / 2]);
     });
-    // 같은 덩어리를 두 귀퉁이가 고르면 실패
-    for (let i = 0; i < 4 && ok; i++) for (let j = i + 1; j < 4; j++) if (Math.hypot(out[i][0] - out[j][0], out[i][1] - out[j][1]) < w * 0.1) ok = false;
+    // 네 점이 종이 꼴(마커 사각형 180×267mm)인지: 마주보는 변 길이가 비슷하고 세로가 가로보다 길어야
+    if (ok) {
+      const len = (a, b) => Math.hypot(out[a][0] - out[b][0], out[a][1] - out[b][1]);
+      const top = len(0, 1), bottom = len(2, 3), left = len(0, 2), right = len(1, 3);
+      const ratio = (left + right) / (top + bottom);
+      if (Math.min(top, bottom) / Math.max(top, bottom) < 0.65 || Math.min(left, right) / Math.max(left, right) < 0.65 || ratio < 1.1 || ratio > 2.0) ok = false;
+    }
     return { corners: out, ok };
   }
 
@@ -198,7 +213,7 @@
       v[j * N + i] = sampleAt(page.gray, page.w, page.h, px, py);
     }
     const sorted = Float32Array.from(v).sort();
-    const paper = sorted[Math.floor(N * N * 0.8)], darkest = sorted[Math.floor(N * N * 0.002)];
+    const paper = sorted[Math.floor(N * N * 0.8)], darkest = sorted[Math.floor(N * N * 0.001)];
     if (paper - darkest < 55) return null;
     const thr = paper - (paper - darkest) * 0.55;
     const ink = new Uint8Array(N * N);
@@ -215,10 +230,10 @@
         if (k >= N && ink[k - N] && !seen[k - N]) { seen[k - N] = 1; stack.push(k - N); }
         if (k < N * N - N && ink[k + N] && !seen[k + N]) { seen[k + N] = 1; stack.push(k + N); }
       }
-      if (members.length < 22) members.forEach((k) => { ink[k] = 0; });
+      if (members.length < 12) members.forEach((k) => { ink[k] = 0; });
     }
     let any = 0; for (let i = 0; i < N * N; i++) any += ink[i];
-    return any < 30 ? null : ink;
+    return any < 16 ? null : ink;
   }
 
   /* 비트맵 → 외곽선. 픽셀 변을 이어 닫힌 고리로 만들고(바깥·구멍 방향이 저절로 반대), 다듬는다.
@@ -439,13 +454,27 @@
     CELLS.forEach((c, n) => { cellIndex[c.kind + ':' + c.ch] = glyphMap[n] || null; });
     const g = (kind, ch) => cellIndex[kind + ':' + ch];
     let count = 0;
-    // 영문·숫자·부호: 칸 단위 그대로(칸 17mm = 1000). 바닥을 종류별로.
+    // 영문·숫자·부호: 사람마다 쓰는 크기가 달라서 종류별 높이로 맞춘다(대문자 640, 소문자 460, 올라가는 글자 660, 내려가는 글자 680).
+    // 부호는 대문자 평균 크기 기준으로 같이 줄인다.
+    const capHeights = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].map((ch) => g('upper', ch)).filter(Boolean).map((gl) => gl.bbox.h).sort((a, b) => a - b);
+    const capScale = capHeights.length ? 640 / capHeights[Math.floor(capHeights.length / 2)] : 1;
+    const latinScale = (c, gl) => {
+      const h = Math.max(gl.bbox.h, 1);
+      if (c.kind === 'upper' || c.kind === 'digit') return 640 / h;
+      if (c.kind === 'lower') {
+        if (c.ch === 'j') return 760 / h;
+        if (DESCENDERS.includes(c.ch)) return 680 / h;
+        if ('bdfhklti'.includes(c.ch)) return 660 / h;
+        return 460 / h;
+      }
+      return capScale;
+    };
     CELLS.forEach((c) => {
       if (['cho1', 'cho2', 'jung', 'jong'].includes(c.kind)) return;
       const gl = g(c.kind, c.ch);
       const code = c.ch.codePointAt(0);
       if (!gl) { glyphs.push(new opentype.Glyph({ name: 'uni' + code.toString(16).toUpperCase().padStart(4, '0'), unicode: code, advanceWidth: 450, path: new opentype.Path() })); return; }
-      const placed = placeLatin(gl, latinBottom(c), 1);
+      const placed = placeLatin(gl, latinBottom(c), Math.min(latinScale(c, gl), capScale * 2.5));
       glyphs.push(new opentype.Glyph({ name: 'uni' + code.toString(16).toUpperCase().padStart(4, '0'), unicode: code, advanceWidth: placed.adv, path: toPath(placed.polys) }));
       count++;
     });
