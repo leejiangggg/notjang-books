@@ -16,7 +16,7 @@ body.light { background: #ffffff; color: #111111; }
 .sheet { position: relative; width: 210mm; height: 297mm; background: #fff; box-shadow: 0 0 0 1px #e3e3e3, 0 10px 30px rgba(0,0,0,.08); overflow: hidden; color: #111; }
 .sheet .mark { position: absolute; display: block; background: #000; }
 .sheet .shead { position: absolute; left: 50mm; right: 50mm; top: 11mm; margin: 0; text-align: center; font-size: 3.2mm; letter-spacing: .04em; color: #333; }
-.sheet .sfoot { position: absolute; left: 25mm; right: 25mm; top: 256mm; margin: 0; font-size: 3mm; line-height: 1.5; color: #666; }
+.sheet .sfoot { position: absolute; left: 24mm; right: 24mm; top: 265.5mm; margin: 0; font-size: 2.7mm; line-height: 1.4; color: #666; }
 .sheet .cell { position: absolute; border: 0.25mm solid #c9c9c9; }
 .sheet .lab { position: absolute; left: 0; top: -3.4mm; font-size: 2.6mm; line-height: 1; color: #777; font-family: var(--font); white-space: nowrap; }
 .sheet .lab small { margin-left: 1mm; font-size: 2.3mm; color: #aaa; }
@@ -64,3 +64,11 @@ body.light { background: #ffffff; color: #111111; }
 
 /* 이 페이지는 툴바의 어느 칸도 아니다 */
 .toolbar .pill { display: none; }
+
+/* 통글자 격자판: 영문·숫자·부호 칸의 기준선, 여러 장 올리기, 쪽 머리 */
+.sheet .cell.ln::after { content: ""; position: absolute; left: 1mm; right: 1mm; top: 68%; border-top: 0.2mm dotted #c9c9c9; }
+.pickdrop { margin-bottom: 22px; }
+.uphead { display: flex; align-items: baseline; gap: 10px; margin: 0 0 8px; font-size: 14px; }
+.uphead .pwait { font-size: 12px; color: #999; }
+.uphead .pwait[hidden] { display: none; }
+.uploads { gap: 18px; }
