@@ -15,7 +15,7 @@ body.light { background: #ffffff; color: #111111; }
 .sheets { margin-top: 22px; display: flex; flex-direction: column; gap: 16px; }
 .sheet { position: relative; width: 210mm; height: 297mm; background: #fff; box-shadow: 0 0 0 1px #e3e3e3, 0 10px 30px rgba(0,0,0,.08); overflow: hidden; color: #111; }
 .sheet .mark { position: absolute; display: block; background: #000; }
-.sheet .shead { position: absolute; left: 50mm; right: 50mm; top: 11mm; margin: 0; text-align: center; font-size: 3.2mm; letter-spacing: .04em; color: #333; }
+.sheet .shead { position: absolute; left: 62mm; right: 38mm; top: 11mm; margin: 0; text-align: center; font-size: 3.2mm; letter-spacing: .04em; color: #333; }
 .sheet .sfoot { position: absolute; left: 24mm; right: 24mm; top: 265.5mm; margin: 0; font-size: 2.7mm; line-height: 1.4; color: #666; }
 .sheet .cell { position: absolute; border: 0.25mm solid #c9c9c9; }
 .sheet .lab { position: absolute; left: 0; top: -3.4mm; font-size: 2.6mm; line-height: 1; color: #777; font-family: var(--font); white-space: nowrap; }
@@ -50,15 +50,14 @@ body.light { background: #ffffff; color: #111111; }
   .fm h1 { font-size: 26px; }
 }
 
-/* 인쇄: 격자판 두 장만, 실제 크기 */
+/* 인쇄: 따로 그린 격자판(#printroot)만, 실제 크기 */
+#printroot { display: none; }
 @media print {
   @page { size: A4; margin: 0; }
   body, body.light { background: #fff; }
-  .logo, .lang, .toolbar, .fm > *:not(.step:first-of-type), .step h2, .step > p, .btn, .contact { display: none !important; }
-  .fm { max-width: none; padding: 0; margin: 0; }
-  .step { margin: 0; padding: 0; border: 0; }
-  .sheets { margin: 0; gap: 0; display: block; }
-  .sheet { zoom: 1 !important; box-shadow: none; page-break-after: always; break-after: page; }
+  body > *:not(#printroot) { display: none !important; }
+  #printroot { display: block; margin: 0; }
+  #printroot .sheet { zoom: 1 !important; box-shadow: none; page-break-after: always; break-after: page; }
   .sheet .mark { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
@@ -66,9 +65,28 @@ body.light { background: #ffffff; color: #111111; }
 .toolbar .pill { display: none; }
 
 /* 통글자 격자판: 영문·숫자·부호 칸의 기준선, 여러 장 올리기, 쪽 머리 */
-.sheet .cell.ln::after { content: ""; position: absolute; left: 1mm; right: 1mm; top: 68%; border-top: 0.2mm dotted #c9c9c9; }
 .pickdrop { margin-bottom: 22px; }
 .uphead { display: flex; align-items: baseline; gap: 10px; margin: 0 0 8px; font-size: 14px; }
 .uphead .pwait { font-size: 12px; color: #999; }
 .uphead .pwait[hidden] { display: none; }
 .uploads { gap: 18px; }
+
+/* 만들기 옵션 */
+.opts { display: flex; flex-direction: column; gap: 8px; margin: 0 0 18px; font-size: 14px; color: #333; }
+.opts label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.opts input { width: 18px; height: 18px; accent-color: #111; }
+
+/* 작은 칸(2판): 라벨도 조금 작게 */
+.sheet .cell.v2 .lab { top: -3.1mm; font-size: 2.4mm; }
+/* 저장된 글씨 안내, 쪽 카드 */
+.bankinfo { margin: 0 0 18px; font-size: 13px; line-height: 1.7; color: #555; }
+.uphead .lnk { font-size: 12px; margin-left: auto; }
+.thumbs .th { cursor: default; }
+/* 견본에서 글자 고르기, 고치기 상자 */
+.hand .g { cursor: pointer; border-radius: 4px; }
+.hand .g:hover { background: rgba(232,112,143,.18); }
+.hand .g.pick { background: rgba(232,112,143,.4); }
+.fixbox { margin-top: 36px; padding-top: 22px; border-top: 1px solid #e3e3e3; }
+.fixbox h3 { margin: 0 0 8px; }
+.fixbox p { margin: 0 0 12px; font-size: 13px; line-height: 1.7; color: #555; }
+.fixbox .sampletext { margin: 0 0 14px; }

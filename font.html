@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;800&family=Noto+Serif+JP:wght@400;700;800&display=swap">
 <link rel="stylesheet" href="css/site.css?v=20">
-<link rel="stylesheet" href="css/font.css?v=23">
+<link rel="stylesheet" href="css/font.css?v=40">
 </head>
 <body class="light">
 
@@ -37,21 +37,30 @@
   <section class="step">
     <h2 id="s2"></h2>
     <p id="s2p"></p>
-    <label class="drop pickdrop"><input type="file" accept="image/*" multiple id="pick"><span id="picklabel"></span></label>
+    <label class="drop pickdrop"><input type="file" accept="image/*,application/pdf" multiple id="pick"><span id="picklabel"></span></label>
+    <p class="bankinfo"><span id="bankinfo"></span> <button type="button" id="reset" class="lnk" hidden></button></p>
     <div id="uploads" class="uploads"></div>
   </section>
 
   <section class="step">
     <h2 id="s3"></h2>
     <p id="s3p"></p>
+    <div class="opts"><label><input type="checkbox" id="even" checked> <span id="evenl"></span></label><label><input type="checkbox" id="align"> <span id="alignl"></span></label></div>
     <button type="button" id="make" class="btn" disabled></button>
     <p id="made" class="made"></p>
     <div id="result" class="result" hidden>
       <h3 id="sampleh"></h3>
-      <div class="paper"><p id="sampleout" class="hand" data-def="오늘 찍은 사진 한 장에 몇 줄을 적으면 낱장 한 장이 됩니다. 왜 뭐 꿈 밥 옷 흡 특별한 하루, 안녕하세요 낱장북스. Hello World 1234567890">오늘 찍은 사진 한 장에 몇 줄을 적으면 낱장 한 장이 됩니다. 왜 뭐 꿈 밥 옷 흡 특별한 하루, 안녕하세요 낱장북스. Hello World 1234567890</p></div>
+      <div class="paper"><p id="sampleout" class="hand" data-def="오늘 찍은 사진 한 장에 몇 줄을 적으면 낱장 한 장이 됩니다. 왜 뭐 꿈 밥 옷 흡 특별한 하루, 안녕하세요 낱장북스. Hello World 1234567890"></p></div>
       <input id="sampletext" class="sampletext" type="text">
       <button type="button" id="download" class="btn"></button>
       <p id="after" class="after"></p>
+      <div class="fixbox">
+        <h3 id="fixh"></h3>
+        <p id="fixp"></p>
+        <input id="fixchars" class="sampletext" type="text">
+        <button type="button" id="fixprint" class="btn"></button>
+        <p id="fixnote" class="made"></p>
+      </div>
     </div>
   </section>
 
@@ -69,9 +78,11 @@
   </div>
 </div>
 
+<div id="printroot" class="sheets" aria-hidden="true"></div>
+
 <script src="js/vendor/opentype.min.js"></script>
 <script src="js/lang.js?v=23"></script>
-<script src="js/fontset.js?v=23"></script>
-<script src="js/font.js?v=23"></script>
+<script src="js/fontset.js?v=40"></script>
+<script src="js/font.js?v=41"></script>
 </body>
 </html>
