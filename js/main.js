@@ -18,10 +18,10 @@
   const tx = () => T[window.NotjangLang ? NotjangLang.get() : 'KR'];
   // 도구 막대와 오른쪽 위 버튼의 이름
   const NAV = {
-    KR: { write: '한 장 써보기', shop: '서점', about: '낱장북스 소개', post: '엽서 쓰기', font: '내 폰트 만들기', app: '앱 다운로드', postSoon: '엽서 쓰기는 곧 열려요.' },
-    EN: { write: 'Write one sheet', shop: 'Shop', about: 'About', post: 'Write a postcard', font: 'Make my font', app: 'Get the app', postSoon: 'Postcards are coming soon.' },
-    JP: { write: '一枚書いてみる', shop: '書店', about: '紹介', post: 'はがきを書く', font: '自分のフォントを作る', app: 'アプリを入手', postSoon: 'はがきはもうすぐ始まります。' },
-    DE: { write: 'Ein Blatt schreiben', shop: 'Laden', about: 'Über uns', post: 'Postkarte schreiben', font: 'Meine Schrift machen', app: 'App laden', postSoon: 'Postkarten kommen bald.' }
+    KR: { write: '한 장 써보기', shop: '서점', about: '낱장북스 소개', post: '엽서 쓰기', font: '내 폰트 만들기', app: '앱 다운로드' },
+    EN: { write: 'Write one sheet', shop: 'Shop', about: 'About', post: 'Write a postcard', font: 'Make my font', app: 'Get the app' },
+    JP: { write: '一枚書いてみる', shop: '書店', about: '紹介', post: 'はがきを書く', font: '自分のフォントを作る', app: 'アプリを入手' },
+    DE: { write: 'Ein Blatt schreiben', shop: 'Laden', about: 'Über uns', post: 'Postkarte schreiben', font: 'Meine Schrift machen', app: 'App laden' }
   };
   const nav = () => NAV[window.NotjangLang ? NotjangLang.get() : 'KR'];
   document.querySelectorAll('[data-nav]').forEach((el) => { const n = nav()[el.dataset.nav]; el.title = n; el.setAttribute('aria-label', n); });
@@ -154,7 +154,6 @@
     else { scrollTo(0, 0); if (!cv.tiles.length) buildCanvas(); }
   }
   btnCanvas.addEventListener('click', () => setView('canvas'));
-  $('#btnPostcard').addEventListener('click', () => toast(nav().postSoon));   // 엽서 쓰기: 아직 자리만
 
   // ── 크게 보기 ────────────────────────────────────────────
   const vw = {

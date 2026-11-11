@@ -1,0 +1,37 @@
+/* 엽서 쓰기(postcard.html)와 받은 엽서(card.html). 바탕 규칙은 write.css를 같이 쓴다. */
+.hint.center { text-align: center; }
+
+/* 뒤집기: 눌러서 앞면·뒷면. 돌리는 건 flip.js가 한다 */
+.flipper { position: relative; cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; will-change: transform; }
+.flipper:focus-visible { outline: 2px solid #e8708f; outline-offset: 6px; }
+
+/* 링크가 만들어진 뒤 */
+.ready { margin: 26px 0 10px; font-size: 15px; font-weight: 700; }
+.linkbox { display: block; width: 100%; box-sizing: border-box; height: 46px; padding: 0 14px; border: 0; border-radius: 10px; background: rgba(255,243,230,.1); color: #FFF3E6; font: 400 13px/1 ui-monospace, 'SF Mono', Menlo, monospace; outline: none; }
+.linkbox:focus { box-shadow: inset 0 0 0 1.5px rgba(255,243,230,.5); }
+.btn.quiet { box-shadow: none; opacity: .6; text-decoration: underline; text-underline-offset: 3px; padding: 0 10px; }
+
+/* 이 브라우저에서 보낸 엽서 */
+.sent { margin-top: 44px; padding-top: 24px; border-top: 1px solid rgba(255,243,230,.18); }
+.sent ul { list-style: none; margin: 0; padding: 0; }
+.sent li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; font-size: 13px; }
+.sent li a { color: inherit; text-underline-offset: 3px; }
+.sent li button { all: unset; font-size: 12px; opacity: .6; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.sent li button:focus-visible { outline: 2px solid #e8708f; outline-offset: 3px; }
+
+/* ── 받은 엽서 ── */
+.cardpage { min-height: 100vh; min-height: 100dvh; }
+.cardmain { min-height: 100vh; min-height: 100dvh; box-sizing: border-box; padding: 84px 20px 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+.cstate { margin: 0; font-size: 14px; line-height: 1.9; text-align: center; opacity: .7; }
+.cstate:empty { display: none; }
+.flipper.recv { width: min(86vw, calc((100vh - 250px) * 2 / 3), 460px); width: min(86vw, calc((100dvh - 250px) * 2 / 3), 460px); aspect-ratio: 2 / 3; }
+.face { width: 100%; height: 100%; filter: drop-shadow(0 12px 28px rgba(0,0,0,.5)); }
+.face .mask { display: block; width: 100%; height: 100%; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.face img { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+/* 뒷면은 종이를 뒤집은 모양: 가리개만 좌우로 뒤집는다(겉을 뒤집고 그림을 한 번 더 뒤집어 그림은 그대로) */
+.face[data-face="back"] .mask, .face[data-face="back"] img { transform: scaleX(-1); }
+.cfoot { margin-top: 18px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.linkbtn { all: unset; font-size: 12px; opacity: .5; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.linkbtn:focus-visible { outline: 2px solid #e8708f; outline-offset: 3px; }
+@keyframes arrive { from { opacity: 0; transform: translateY(26px) rotate(-3deg) scale(.96) } to { opacity: 1; transform: none } }
+.flipper.recv.in { animation: arrive .7s cubic-bezier(.2,.7,.2,1) both; }

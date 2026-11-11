@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>낱장북스 · 엽서가 왔어요</title>
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#161616">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="엽서가 왔어요 · 낱장북스">
+<meta property="og:description" content="눌러서 앞면과 뒷면을 뒤집어 보세요.">
+<meta property="og:image" content="https://notjangbooks.com/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="css/site.css?v=44">
+<link rel="stylesheet" href="css/write.css?v=44">
+<link rel="stylesheet" href="css/postcard.css?v=44">
+</head>
+<body class="stage cardpage">
+
+<a href="index.html" class="logo" aria-label="NOTJANG BOOOKS"><img src="assets/logo-dark.png" alt="NOTJANG BOOOKS"></a>
+
+<main class="cardmain">
+  <p id="state" class="cstate"></p>
+  <div id="flipper" class="flipper recv" role="button" tabindex="0" hidden>
+    <div class="face" data-face="front"><span class="mask"><img id="imgF" alt="" draggable="false"></span></div>
+    <div class="face" data-face="back" hidden><span class="mask"><img id="imgB" alt="" draggable="false"></span></div>
+  </div>
+  <p id="hint" class="hint center" hidden></p>
+  <div id="foot" class="cfoot" hidden>
+    <a class="btn" id="write" href="postcard.html"></a>
+    <button type="button" class="lnk linkbtn" id="report"></button>
+  </div>
+</main>
+
+<script src="config.js?v=44"></script>
+<script src="js/lang.js?v=44"></script>
+<script src="js/sheetkit.js?v=44"></script>
+<script src="js/flip.js?v=44"></script>
+<script src="js/card.js?v=44"></script>
+</body>
+</html>

@@ -4,16 +4,9 @@
 (function () {
   'use strict';
   const APP_URL = 'https://apps.apple.com/kr/app/id6829389762';
-  const PAPERS = [
-    ['white', 'Plain White', 100], ['grey_torn', 'Blue-Grey Torn', 60], ['kraft', 'Kraft', 70], ['ash', 'Ash Recycled', 80],
-    ['crumpled', 'Crumpled Wove', 80], ['pink_torn', 'Pink Torn', 80], ['cream', 'Ivory', 100], ['grid', 'Grid', 70],
-    ['blue', 'Sky Blue', 80], ['white_torn', 'Torn White', 80], ['ivory_torn', 'Torn Ivory', 80], ['folded', 'Folded Ivory', 90],
-    ['grey', 'Grey Board', 120], ['spiral', 'Spiral Torn', 80]
-  ];
+  const { PAPERS, W, H, S, INK, loadImg, paperImg, wrap, drawLines, loadMine, readPhoto } = window.NotjangKit;
+  const MAXLEN = 400;
   const ASPECTS = [['3:2', 1.5], ['1:1', 1], ['9:10', 0.9]];
-  const W = 1080, H = 1620, S = W / 354;           // 낱장 그림 크기와 앱 기준 배율
-  const INK = '#1C1B19', MAXLEN = 400;
-
   const T = {
     KR: {
       title: '한 장 써보기', lead: '사진 한 장, 몇 줄의 글, 낱장 한 장. 설치 없이 지금 써 보세요.',
@@ -22,7 +15,7 @@
       original: '원본', titlePh: '제목 (선택)', bodyPh: '오늘 눈에 들어온 것 하나와 그 옆에 둘 몇 줄.', left: (n) => `${n}자 남음`,
       over: '글이 종이를 넘쳤어요. 넘친 부분은 찍히지 않아요.', fontSerif: '명조', fontMine: '내 손글씨', publish: '출판',
       printing: '인쇄 중…', save: '이미지 저장', share: '공유', again: '한 장 더 쓰기', hold: '그림을 길게 눌러 저장할 수도 있어요.',
-      more: '쓴 낱장을 모아 두고, 타자기 영상으로 만들고, 서점에 내놓으려면', app: '앱에서 계속 쓰기', font: '내 손글씨로 폰트 만들기',
+      more: '쓴 낱장을 모아 두고, 타자기 영상으로 만들고, 서점에 내놓으려면', app: '앱에서 계속 쓰기', post: '친구에게 엽서 쓰기', font: '내 손글씨로 폰트 만들기',
       keep: '이 낱장은 어디에도 저장되지 않아요. 창을 닫기 전에 이미지를 저장하세요.'
     },
     EN: {
@@ -32,7 +25,7 @@
       original: 'Original', titlePh: 'Title (optional)', bodyPh: 'One thing that caught your eye today, and a few lines beside it.', left: (n) => `${n} left`,
       over: 'The text runs past the paper. The overflow will not be printed.', fontSerif: 'Serif', fontMine: 'My handwriting', publish: 'Publish',
       printing: 'Printing…', save: 'Save image', share: 'Share', again: 'Write another', hold: 'You can also long-press the image to save it.',
-      more: 'To keep your sheets, turn them into typewriter videos and put them in the shop', app: 'Continue in the app', font: 'Make a font from my handwriting',
+      more: 'To keep your sheets, turn them into typewriter videos and put them in the shop', app: 'Continue in the app', post: 'Write a postcard to a friend', font: 'Make a font from my handwriting',
       keep: 'This sheet is not stored anywhere. Save the image before closing the window.'
     }
   };
@@ -41,47 +34,6 @@
   const $ = (id) => document.getElementById(id);
 
   const state = { step: 1, paper: 'white', photo: null, ratio: 1.5, posX: 0.5, posY: 0.5, inks: ['brightRed', 'green'], printed: null, title: '', body: '', font: 'serif', mine: false };
-  const paperImgs = {};
-  const loadImg = (src) => new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = src; });
-  const paperImg = (id) => paperImgs[id] || (paperImgs[id] = loadImg('assets/papers/' + id + '.webp'));
-
-  /* ── 글 앉히기: 글자 단위로 줄을 나누고 양끝을 맞춘다 ─────────────────── */
-  const NO_START = new Set([...'.,!?)]}»”’、。…:;%']);
-  function wrap(ctx, text, width) {
-    const lines = [];
-    text.split('\n').forEach((para) => {
-      const chars = [...para]; let line = [], w = 0;
-      if (!chars.length) { lines.push({ chars: [], last: true }); return; }
-      chars.forEach((ch) => {
-        const cw = ctx.measureText(ch).width;
-        if (w + cw > width && line.length && !NO_START.has(ch)) {
-          // 줄 끝 공백은 버리고, 낱말 중간이 아니면 그대로 끊는다
-          while (line.length && line[line.length - 1].ch === ' ') w -= line.pop().w;
-          lines.push({ chars: line, w, last: false }); line = []; w = 0;
-          if (ch === ' ') return;
-        }
-        line.push({ ch, w: cw }); w += cw;
-      });
-      lines.push({ chars: line, w, last: true });
-    });
-    return lines;
-  }
-  /* 줄들을 그린다. upto = 찍을 글자 수(타자기). 돌려주는 값: 그린 글자 수와 마지막 글자 자리 */
-  function drawLines(ctx, lines, x, y, width, lineH, upto) {
-    let n = 0, caret = null;
-    for (const ln of lines) {
-      const gaps = ln.chars.length - 1;
-      const extra = !ln.last && gaps > 0 ? Math.min((width - ln.w) / gaps, lineH * 0.25) : 0;
-      let cx = x;
-      for (const c of ln.chars) {
-        if (n >= upto) return { n, caret };
-        ctx.fillText(c.ch, cx, y); cx += c.w + extra; n++; caret = [cx, y];
-      }
-      y += lineH;
-    }
-    return { n, caret };
-  }
-
   const fontOf = (px, bold) => `${bold ? 700 : 400} ${px}px ${state.font === 'mine' ? "'NotjangHandUser', " : ''}'Nanum Myeongjo', 'Noto Serif KR', serif`;
 
   /* 낱장을 그린다. upto = 타자기로 찍힌 글자 수(없으면 전부). 돌려주는 값: {total, overflow} */
@@ -189,14 +141,7 @@
   }
 
   async function pickPhoto(file) {
-    let bmp;
-    try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
-    catch (e) { bmp = await loadImg(URL.createObjectURL(file)); }
-    // 너무 큰 사진은 줄여 둔다
-    const k = Math.min(1, 2400 / Math.max(bmp.width, bmp.height));
-    const cv = document.createElement('canvas'); cv.width = Math.round(bmp.width * k); cv.height = Math.round(bmp.height * k);
-    cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height);
-    state.photo = cv; state.posX = state.posY = 0.5;
+    state.photo = await readPhoto(file); state.posX = state.posY = 0.5;
     buildChips(); await reprint();
   }
 
@@ -258,25 +203,6 @@
       $('share').hidden = !(navigator.canShare && navigator.canShare({ files: [new File([blob], 'notjang.png', { type: 'image/png' })] }));
       $('done').hidden = false;
     }, 'image/png');
-  }
-
-  /* 내 손글씨 폰트: 폰트 메이커가 이 브라우저에 만들어 둔 게 있으면 쓴다 */
-  function loadMine() {
-    return new Promise((ok) => {
-      let rq; try { rq = indexedDB.open('notjang-font', 1); } catch (e) { return ok(false); }
-      rq.onupgradeneeded = () => rq.result.createObjectStore('kv');
-      rq.onerror = () => ok(false);
-      rq.onsuccess = () => {
-        try {
-          const g = rq.result.transaction('kv').objectStore('kv').get('ttf');
-          g.onsuccess = async () => {
-            if (!g.result) return ok(false);
-            try { const f = new FontFace('NotjangHandUser', g.result); await f.load(); document.fonts.add(f); ok(true); } catch (e) { ok(false); }
-          };
-          g.onerror = () => ok(false);
-        } catch (e) { ok(false); }
-      };
-    });
   }
 
   function text() {
