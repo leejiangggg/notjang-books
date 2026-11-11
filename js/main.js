@@ -18,6 +18,7 @@
     DE: { date: (d) => 'Dieses Blatt wurde am ' + d.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }) + ' veröffentlicht.', empty: 'Noch nichts im Laden.<br>Lege ein Blatt aus der App aus, dann erscheint es hier.', sample: 'Beispielblätter · kein Token, nicht mit dem Laden verbunden', err: 'Laden konnte nicht gelesen werden: ', dl: 'Herunterladen', like: 'Gefällt mir', report: 'Melden', block: 'Diese Person ausblenden', rq: 'Warum meldest du dieses Blatt?', reasons: { spam: 'Spam oder Werbung', abuse: 'Beleidigung, Hass oder Belästigung', privacy: 'Private Daten', other: 'Anderer Grund' }, cancel: 'Abbrechen', reported: 'Gemeldet. Dieses Blatt wird hier nicht mehr gezeigt.', blockQ: 'Alle Blätter dieser Person ausblenden? Nur in diesem Browser.', blocked: 'Ausgeblendet.', admHide: 'Aus dem Laden nehmen (Admin)', admShow: 'Wieder auslegen (Admin)', admHidden: 'Für alle entfernt.', admShown: 'Wieder ausgelegt.', admOn: 'Admin-Modus', admOff: 'Admin-Modus aus', admBad: 'Falscher Admin-Schlüssel.' }
   };
   const tx = () => T[window.NotjangLang ? NotjangLang.get() : 'KR'];
+  $('#tryitL').textContent = { KR: '한 장 써보기', EN: 'Write one sheet', JP: '一枚書いてみる', DE: 'Ein Blatt schreiben' }[window.NotjangLang ? NotjangLang.get() : 'KR'];
 
   let allWorks = [], works = [];
   let view = 'canvas';

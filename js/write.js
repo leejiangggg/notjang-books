@@ -280,7 +280,7 @@
   }
 
   function text() {
-    L = T[window.NotjangLang.get()] || T.KR;
+    L = T[window.NotjangLang.get()] || T.EN;
     document.title = '낱장북스 · ' + L.title;
     $('h1').textContent = L.title; $('lead').textContent = L.lead;
     $('s1').textContent = '1. ' + L.s1; $('s2').textContent = '2. ' + L.s2; $('s3').textContent = '3. ' + L.s3;
