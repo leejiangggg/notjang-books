@@ -89,12 +89,20 @@ body.vertical-mode { overflow: auto; }
 .viewer .menu .adm { color: #e8708f; }
 .adminbar { position: fixed; right: 16px; bottom: 18px; z-index: 60; padding: 6px 12px; border-radius: 999px; background: #e8708f; color: #161616; font: 700 11px/1 "Nanum Gothic Coding", monospace; letter-spacing: .14em; pointer-events: none; }
 
-/* 한 장 써보기: 첫 화면 오른쪽 위 입구 */
-.tryit { position: fixed; right: 40px; top: 36px; z-index: 6; display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 22px 0 17px; border-radius: 999px; background: #FFF3E6; color: #161616; font: 800 14px/1 var(--font); letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; box-shadow: 0 8px 22px rgba(0,0,0,.45); transition: transform .3s cubic-bezier(.34,1.45,.5,1), background .2s; }
-.tryit svg { width: 18px; height: 18px; flex: none; }
-.tryit:hover { transform: translateY(-2px) rotate(-1.5deg); background: #ffffff; }
-.tryit:focus-visible { outline: 2px solid #e8708f; outline-offset: 3px; }
+/* 첫 화면 오른쪽 위: 앱 다운로드 */
+.topcta { position: fixed; right: 40px; top: 36px; z-index: 6; display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 22px 0 17px; border-radius: 999px; background: #FFF3E6; color: #161616; font: 800 14px/1 var(--font); letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; box-shadow: 0 8px 22px rgba(0,0,0,.45); transition: transform .3s cubic-bezier(.34,1.45,.5,1), background .2s; }
+.topcta svg { width: 18px; height: 18px; flex: none; }
+.topcta:hover { transform: translateY(-2px) rotate(-1.5deg); background: #ffffff; }
+.topcta:focus-visible { outline: 2px solid #e8708f; outline-offset: 3px; }
+/* 도구 막대: 써보기 · 서점 | 소개 · 엽서 · 폰트. 서점이 지금 화면이라 흰 알약은 늘 둘째 칸 */
+.seg { --itw: 68px; }
+.seg .it, .seg .pill { width: var(--itw); }
+.seg .pill { transform: translateX(var(--itw)); }
 @media (max-width: 767px) {
-  .tryit { right: 16px; top: 14px; height: 40px; padding: 0 16px 0 13px; font-size: 13px; gap: 6px; }
-  .tryit svg { width: 16px; height: 16px; }
+  .topcta { right: 16px; top: 14px; height: 40px; padding: 0 16px 0 13px; font-size: 13px; gap: 6px; }
+  .topcta svg { width: 16px; height: 16px; }
+}
+@media (max-width: 400px) {
+  .seg { --itw: 58px; }
+  .seg .div { margin: 0 5px; }
 }

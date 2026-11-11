@@ -16,8 +16,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;800&family=Noto+Serif+JP:wght@400;700;800&display=swap">
-<link rel="stylesheet" href="css/site.css?v=20">
-<link rel="stylesheet" href="css/main.css?v=20">
+<link rel="stylesheet" href="css/site.css?v=21">
+<link rel="stylesheet" href="css/main.css?v=21">
 </head>
 <body>
 
@@ -26,16 +26,17 @@
 
 <h1 class="logo"><img src="assets/logo-dark.png" alt="NOTJANG BOOOKS"></h1>
 
-<a id="tryit" class="tryit" href="write.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M5 19l1-4.5L16.5 4l3.5 3.5L9.5 18z"></path><path d="M14 6.5l3.5 3.5"></path></svg><span id="tryitL">한 장 써보기</span></a>
+<a id="getapp" class="topcta" href="download.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10l5 5 5-5"></path><path d="M5 19h14"></path></svg><span id="getappL">앱 다운로드</span></a>
 
-<div class="toolbar" role="toolbar" aria-label="보기 방식">
+<div class="toolbar" role="toolbar" aria-label="낱장북스">
   <div class="seg">
-    <span id="pill" class="pill" aria-hidden="true" style="transform: translateX(68px)"></span>
-    <button type="button" id="btnVertical" class="it" aria-label="세로 보기" title="세로 보기" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4.5" width="16" height="6"></rect><rect x="4" y="13.5" width="16" height="6"></rect></svg></button>
-    <button type="button" id="btnCanvas" class="it on" aria-label="사방 보기" title="사방 보기" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
+    <span id="pill" class="pill" aria-hidden="true"></span>
+    <a class="it" href="write.html" data-nav="write" aria-label="한 장 써보기" title="한 장 써보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M5 19l1-4.5L16.5 4l3.5 3.5L9.5 18z"></path><path d="M14 6.5l3.5 3.5"></path></svg></a>
+    <button type="button" id="btnCanvas" class="it on" data-nav="shop" aria-label="서점" title="서점" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5"></rect></svg></button>
     <span class="div" aria-hidden="true"></span>
-    <a class="it" href="about.html" aria-label="낱장북스 소개" title="About"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M8 8.5V5h8v6h-4v3.5"></path><rect x="11" y="18" width="2" height="2" fill="currentColor" stroke="none"></rect></svg></a>
-    <a class="it" href="download.html" aria-label="앱 다운로드 안내" title="앱 다운로드"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M12 4v11"></path><path d="M7 10l5 5 5-5"></path><path d="M5 19h14"></path></svg></a>
+    <a class="it" href="about.html" data-nav="about" aria-label="낱장북스 소개" title="낱장북스 소개"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M8 8.5V5h8v6h-4v3.5"></path><rect x="11" y="18" width="2" height="2" fill="currentColor" stroke="none"></rect></svg></a>
+    <button type="button" id="btnPostcard" class="it" data-nav="post" aria-label="엽서 쓰기" title="엽서 쓰기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><rect x="3.5" y="6" width="17" height="12"></rect><rect x="15" y="8.5" width="3" height="3.5"></rect><path d="M6.5 13h5"></path><path d="M6.5 15.5h3.5"></path></svg></button>
+    <a class="it" href="font.html" data-nav="font" aria-label="내 폰트 만들기" title="내 폰트 만들기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="miter" stroke-linecap="square" aria-hidden="true"><path d="M5.5 19L12 5l6.5 14"></path><path d="M8.2 14h7.6"></path></svg></a>
   </div>
 </div>
 
@@ -63,10 +64,10 @@
   </div>
 </div>
 
-<script src="config.js?v=20"></script>
-<script src="js/lang.js?v=20"></script>
-<script src="js/shop.js?v=20"></script>
-<script src="js/likes.js?v=20"></script>
-<script src="js/main.js?v=20"></script>
+<script src="config.js?v=21"></script>
+<script src="js/lang.js?v=21"></script>
+<script src="js/shop.js?v=21"></script>
+<script src="js/likes.js?v=21"></script>
+<script src="js/main.js?v=21"></script>
 </body>
 </html>

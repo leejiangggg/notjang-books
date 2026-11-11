@@ -8,8 +8,6 @@
   const viewer = $('#viewer');
   const status = $('#status');
   const btnCanvas = $('#btnCanvas');
-  const btnVertical = $('#btnVertical');
-  const pill = $('#pill');
 
   const T = {
     KR: { date: (d) => '이 낱장은 ' + d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) + '에 출판되었습니다.', empty: '아직 서점에 걸린 낱장이 없어요.<br>앱에서 낱장을 내놓으면 여기에 걸려요.', sample: '예시 낱장 · 토큰이 없어 서점에 연결하지 않았어요', err: '서점을 읽지 못했어요: ', dl: '다운로드', like: '좋아요', report: '신고하기', block: '이 글쓴이 가리기', rq: '왜 신고하나요?', reasons: { spam: '스팸·광고', abuse: '욕설·혐오·괴롭힘', privacy: '개인정보·사생활', other: '그 밖의 이유' }, cancel: '취소', reported: '신고했어요. 이 낱장은 더 보이지 않아요.', blockQ: '이 글쓴이의 낱장을 모두 가릴까요? 이 브라우저에서만 가려져요.', blocked: '가렸어요.', admHide: '서점에서 내리기 (관리자)', admShow: '다시 걸기 (관리자)', admHidden: '모두에게서 내렸어요.', admShown: '다시 걸었어요.', admOn: '관리자 모드', admOff: '관리자 모드 꺼짐', admBad: '관리자 키가 맞지 않아요.' },
@@ -18,7 +16,16 @@
     DE: { date: (d) => 'Dieses Blatt wurde am ' + d.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }) + ' veröffentlicht.', empty: 'Noch nichts im Laden.<br>Lege ein Blatt aus der App aus, dann erscheint es hier.', sample: 'Beispielblätter · kein Token, nicht mit dem Laden verbunden', err: 'Laden konnte nicht gelesen werden: ', dl: 'Herunterladen', like: 'Gefällt mir', report: 'Melden', block: 'Diese Person ausblenden', rq: 'Warum meldest du dieses Blatt?', reasons: { spam: 'Spam oder Werbung', abuse: 'Beleidigung, Hass oder Belästigung', privacy: 'Private Daten', other: 'Anderer Grund' }, cancel: 'Abbrechen', reported: 'Gemeldet. Dieses Blatt wird hier nicht mehr gezeigt.', blockQ: 'Alle Blätter dieser Person ausblenden? Nur in diesem Browser.', blocked: 'Ausgeblendet.', admHide: 'Aus dem Laden nehmen (Admin)', admShow: 'Wieder auslegen (Admin)', admHidden: 'Für alle entfernt.', admShown: 'Wieder ausgelegt.', admOn: 'Admin-Modus', admOff: 'Admin-Modus aus', admBad: 'Falscher Admin-Schlüssel.' }
   };
   const tx = () => T[window.NotjangLang ? NotjangLang.get() : 'KR'];
-  $('#tryitL').textContent = { KR: '한 장 써보기', EN: 'Write one sheet', JP: '一枚書いてみる', DE: 'Ein Blatt schreiben' }[window.NotjangLang ? NotjangLang.get() : 'KR'];
+  // 도구 막대와 오른쪽 위 버튼의 이름
+  const NAV = {
+    KR: { write: '한 장 써보기', shop: '서점', about: '낱장북스 소개', post: '엽서 쓰기', font: '내 폰트 만들기', app: '앱 다운로드', postSoon: '엽서 쓰기는 곧 열려요.' },
+    EN: { write: 'Write one sheet', shop: 'Shop', about: 'About', post: 'Write a postcard', font: 'Make my font', app: 'Get the app', postSoon: 'Postcards are coming soon.' },
+    JP: { write: '一枚書いてみる', shop: '書店', about: '紹介', post: 'はがきを書く', font: '自分のフォントを作る', app: 'アプリを入手', postSoon: 'はがきはもうすぐ始まります。' },
+    DE: { write: 'Ein Blatt schreiben', shop: 'Laden', about: 'Über uns', post: 'Postkarte schreiben', font: 'Meine Schrift machen', app: 'App laden', postSoon: 'Postkarten kommen bald.' }
+  };
+  const nav = () => NAV[window.NotjangLang ? NotjangLang.get() : 'KR'];
+  document.querySelectorAll('[data-nav]').forEach((el) => { const n = nav()[el.dataset.nav]; el.title = n; el.setAttribute('aria-label', n); });
+  $('#getappL').textContent = nav().app;
 
   let allWorks = [], works = [];
   let view = 'canvas';
@@ -143,16 +150,11 @@
     plane.hidden = !canvas;
     vertical.hidden = canvas;
     document.body.classList.toggle('vertical-mode', !canvas);
-    btnCanvas.classList.toggle('on', canvas);
-    btnVertical.classList.toggle('on', !canvas);
-    btnCanvas.setAttribute('aria-pressed', canvas);
-    btnVertical.setAttribute('aria-pressed', !canvas);
-    pill.style.transform = 'translateX(' + (canvas ? 68 : 0) + 'px)';
     if (!canvas) { cv.vx = 0; cv.vy = 0; }
     else { scrollTo(0, 0); if (!cv.tiles.length) buildCanvas(); }
   }
   btnCanvas.addEventListener('click', () => setView('canvas'));
-  btnVertical.addEventListener('click', () => setView('vertical'));
+  $('#btnPostcard').addEventListener('click', () => toast(nav().postSoon));   // 엽서 쓰기: 아직 자리만
 
   // ── 크게 보기 ────────────────────────────────────────────
   const vw = {
