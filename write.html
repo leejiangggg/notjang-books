@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>낱장북스 · 한 장 써보기</title>
+<meta name="theme-color" content="#161616">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="한 장 써보기 · 낱장북스">
+<meta property="og:description" content="사진 한 장, 몇 줄의 글, 낱장 한 장. 설치 없이 지금 써 보세요.">
+<meta property="og:image" content="https://notjangbooks.com/assets/og.png">
+<meta property="og:url" content="https://notjangbooks.com/write.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="css/site.css?v=42">
+<link rel="stylesheet" href="css/write.css?v=43">
+</head>
+<body class="stage">
+
+<a href="index.html" class="logo" aria-label="NOTJANG BOOOKS"><img src="assets/logo-dark.png" alt="NOTJANG BOOOKS"></a>
+<div id="lang" class="lang" role="group" aria-label="Language"></div>
+
+<main class="wr">
+  <section class="wstep" data-step="1">
+    <h1 id="h1"></h1>
+    <p id="lead" class="lead"></p>
+    <h2 id="s1"></h2>
+    <div id="papers" class="papers"></div>
+    <div class="bar"><span></span><button type="button" class="btn" data-go="2" data-t="next"></button></div>
+  </section>
+
+  <section class="wstep" data-step="2" hidden>
+    <h2 id="s2"></h2>
+    <div class="sheetwrap"><canvas id="preview" class="sheetcv"></canvas><p id="busy" class="busy" data-t="printing" hidden></p></div>
+    <div class="tools">
+      <label class="btn ghost"><input type="file" accept="image/*" id="pick" hidden><span id="addlabel"></span></label>
+      <button type="button" class="btn ghost" id="skip" data-t="noPhoto"></button>
+    </div>
+    <div id="photoTools" hidden>
+      <p class="hint" data-t="drag"></p>
+      <div id="aspects" class="chips"></div>
+      <div id="inks" class="inks"></div>
+    </div>
+    <div class="bar"><button type="button" class="btn ghost" data-go="1" data-t="back"></button><button type="button" class="btn" data-go="3" data-t="next"></button></div>
+  </section>
+
+  <section class="wstep" data-step="3" hidden>
+    <h2 id="s3"></h2>
+    <div id="fonts" class="chips" hidden><button type="button" class="chip on" id="fontSerif"></button><button type="button" class="chip" id="fontMine"></button></div>
+    <input id="titleIn" class="titlein" type="text" maxlength="40">
+    <textarea id="bodyIn" class="bodyin" rows="9"></textarea>
+    <p class="count"><span id="left"></span></p>
+    <p id="over" class="over" data-t="over" hidden></p>
+    <canvas id="probe" hidden></canvas>
+    <div class="bar"><button type="button" class="btn ghost" data-go="2" data-t="back"></button><button type="button" class="btn" id="publish" data-go="4" data-t="publish"></button></div>
+  </section>
+
+  <section class="wstep" data-step="4" hidden>
+    <div class="sheetwrap"><canvas id="final" class="sheetcv"></canvas><img id="finalImg" class="sheetcv" alt="" hidden></div>
+    <div id="done" hidden>
+      <p class="hint" data-t="keep"></p>
+      <div class="tools">
+        <a class="btn" id="save" download="notjang-sheet.png" data-t="save"></a>
+        <button type="button" class="btn ghost" id="share" data-t="share" hidden></button>
+        <button type="button" class="btn ghost" id="again" data-t="again"></button>
+      </div>
+      <p class="hint" data-t="hold"></p>
+      <div class="cta">
+        <p data-t="more"></p>
+        <a class="btn pink" id="app" target="_blank" rel="noopener" data-t="app"></a>
+        <a class="lnk" href="font.html" data-t="font"></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="js/lang.js?v=42"></script>
+<script src="js/riso.js?v=42"></script>
+<script src="js/write.js?v=42"></script>
+</body>
+</html>

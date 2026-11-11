@@ -1,0 +1,66 @@
+/* 한 장 써보기. 종이·사진·완성은 검은 무대(#161616), 글쓰기는 크림 종이(#FFF3E6) — 앱과 같은 톤. */
+body { background: #FFF3E6; color: #1C1B19; transition: background .25s ease; }
+body.stage { background: #161616; color: #FFF3E6; }
+.wr { max-width: 480px; margin: 0 auto; padding: 96px 20px 120px; }
+.wr h1 { margin: 0 0 10px; font-size: 30px; font-weight: 800; letter-spacing: -0.02em; }
+.wr .lead { margin: 0 0 36px; font-size: 15px; line-height: 1.8; opacity: .78; }
+.wr h2 { margin: 0 0 16px; font-size: 15px; font-weight: 700; letter-spacing: .01em; opacity: .9; }
+.hint { margin: 12px 0; font-size: 12px; line-height: 1.7; opacity: .6; }
+
+/* 버튼 */
+.btn { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 22px; border-radius: 999px; background: #FFF3E6; color: #161616; font: 700 14px/1 var(--font); cursor: pointer; text-align: center; }
+.btn:disabled { opacity: .35; cursor: default; }
+.btn.ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1.5px currentColor; }
+.btn.pink { background: #e8708f; color: #161616; }
+.btn:focus-visible { outline: 2px solid #e8708f; outline-offset: 3px; }
+body:not(.stage) .btn:not(.ghost):not(.pink) { background: #161616; color: #FFF3E6; }
+.lnk { color: inherit; font-size: 13px; text-underline-offset: 3px; }
+.bar { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; }
+.tools { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+/* 종이 고르기 */
+.papers { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pp { all: unset; position: relative; display: block; aspect-ratio: 2 / 3; cursor: pointer; }
+.pp img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pp span { position: absolute; left: 10px; bottom: 9px; font: 600 11px/1.4 -apple-system, 'Helvetica Neue', sans-serif; color: #1C1B19; }
+.pp small { display: block; font-size: 8px; font-weight: 400; opacity: .8; }
+.pp.on { outline: 2px solid #FFF3E6; outline-offset: 4px; }
+.pp:focus-visible { outline: 2px solid #e8708f; outline-offset: 4px; }
+
+/* 낱장 */
+.sheetwrap { position: relative; }
+.sheetcv { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; filter: drop-shadow(0 10px 26px rgba(0,0,0,.45)); touch-action: pan-y; -webkit-touch-callout: default; user-select: none; }
+#preview { touch-action: none; cursor: grab; }
+.busy { position: absolute; left: 12px; top: 12px; margin: 0; padding: 6px 12px; border-radius: 999px; background: rgba(22,22,22,.72); color: #FFF3E6; font-size: 12px; }
+
+/* 칩: 사진 비율, 잉크, 글꼴 */
+.chips { display: flex; gap: 8px; margin: 14px 0; }
+.chip { all: unset; padding: 8px 14px; border-radius: 999px; font: 700 12px/1 var(--font); box-shadow: inset 0 0 0 1.5px currentColor; opacity: .55; cursor: pointer; }
+.chip.on { opacity: 1; background: #FFF3E6; color: #161616; box-shadow: none; }
+body:not(.stage) .chip.on { background: #161616; color: #FFF3E6; }
+.inks { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 0; }
+.ink { all: unset; display: flex; align-items: center; height: 38px; padding: 0 5px; border-radius: 8px; box-shadow: inset 0 0 0 1.5px rgba(255,243,230,.25); cursor: pointer; }
+.ink i { display: block; width: 22px; height: 28px; }
+.ink i + i { margin-left: 2px; }
+.ink em { padding: 0 8px; font: 700 12px/1 var(--font); font-style: normal; }
+.ink.on { box-shadow: inset 0 0 0 2px #FFF3E6; }
+.chip:focus-visible, .ink:focus-visible { outline: 2px solid #e8708f; outline-offset: 3px; }
+
+/* 글쓰기 */
+.titlein, .bodyin { display: block; width: 100%; box-sizing: border-box; border: 0; background: transparent; color: #1C1B19; font-family: 'Nanum Myeongjo', var(--font); outline: none; resize: none; }
+.titlein { padding: 10px 0; font-size: 22px; font-weight: 700; border-bottom: 1px solid rgba(28,27,25,.18); }
+.bodyin { padding: 14px 0; font-size: 17px; line-height: 2; min-height: 260px; }
+.titlein::placeholder, .bodyin::placeholder { color: rgba(28,27,25,.35); }
+.count { margin: 0; text-align: right; font-size: 12px; opacity: .5; }
+.over { margin: 10px 0 0; font-size: 12px; color: #c0392b; }
+
+/* 끝 화면 */
+.cta { margin-top: 34px; padding-top: 24px; border-top: 1px solid rgba(255,243,230,.18); display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.cta p { margin: 0; font-size: 14px; line-height: 1.8; opacity: .85; }
+
+@media (max-width: 767px) {
+  .wr { padding: 84px 18px 100px; }
+  .wr h1 { font-size: 26px; }
+}
+
+[hidden] { display: none !important; }

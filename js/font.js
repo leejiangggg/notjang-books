@@ -1106,6 +1106,7 @@
     await new Promise((ok) => setTimeout(ok, 30));
     const { font, glyphs, written, composed } = buildFont([...bank.values()], { even: $('even').checked, align: $('align').checked });
     fontBuffer = fixCmap(font.toArrayBuffer(), glyphs);
+    DB.set('ttf', fontBuffer).catch(() => {});   // '한 장 써보기'가 이 글씨로 쓸 수 있게 이 브라우저에 남겨 둔다
     $('made').textContent = L.made(written, composed);
     if (previewFace) document.fonts.delete(previewFace);
     previewFace = new FontFace('NotjangHandPreview', fontBuffer);
