@@ -65,7 +65,9 @@
       bank: (s, o, f) => `저장된 글씨: 한글 ${s}자, 영문·숫자·부호 ${o}자` + (f ? `, 고친 글자 ${f}자` : '') + '. 이 브라우저에만 저장돼요.', nobank: '아직 올린 글씨가 없어요.', reset: '처음부터 다시', resetask: '올린 글씨를 모두 지울까요?',
       s3: '3. 폰트 만들기', s3p: '올린 만큼으로 만들 수 있어요. 빈 칸과 안 쓴 글자는 조합으로 채워요.', even: '글자 크기 고르게 (끄면 쓴 크기 그대로)', align: '위아래 줄 맞추기 (끄면 쓴 위치 그대로)', make: '폰트 만들기', making: '글자 조립 중… 20초쯤 걸려요.',
       made: (w, c) => `완성. 직접 쓴 글자 ${w}개, 조합한 글자 ${c}개.`,
-      sample: '이 글씨로 쓰면 이렇게 보여요', placeholder: '아무 말이나 써 보세요', download: 'TTF 내려받기', after: '내려받은 파일을 낱장북스 앱에서 열면 낱장에 쓸 수 있어요.',
+      sample: '이 글씨로 쓰면 이렇게 보여요', placeholder: '아무 말이나 써 보세요', download: 'TTF 내려받기', after: '내려받은 TTF 파일은 컴퓨터에 설치하면 다른 프로그램에서도 쓸 수 있어요.',
+      useh: '이 글씨로 바로 쓰기', usep: '이 브라우저에서는 방금 만든 글씨로 낱장과 엽서를 쓸 수 있어요.', usewrite: '한 장 써보기', usepost: '엽서 쓰기',
+      kept: '지난번에 만든 폰트예요. 글씨를 더 올렸으면 폰트 만들기를 다시 눌러 주세요.',
       fixh: '몇 글자만 고치기', fixp: '위 견본에서 마음에 안 드는 글자를 누르거나, 아래 칸에 직접 적으세요. 그 글자만 담은 종이를 인쇄해서 쓰고 올리면 그 글자만 바뀝니다. 안 썼던 글자도 여기에 넣으면 직접 쓴 글자가 돼요.',
       fixph: '고칠 글자', fixprint: '고치기 종이 인쇄', fixnone: '고칠 글자를 먼저 골라 주세요.', fixwait: (n) => `고치기 종이를 만들었어요(${n}자). 쓰고 나서 2번에서 올리면 돼요.`, fixdone: (n) => `고친 글자 ${n}개를 넣었어요. 폰트를 다시 만들어요.`, fixlost: '이 고치기 종이에 어떤 글자가 있었는지 이 브라우저가 기억하지 못해요. 고치기 종이를 다시 만들어 주세요.', fixsheet: '고치기',
       empty: (n) => '빈 칸 ' + n + '개', legal: '개인정보 처리방침'
@@ -80,7 +82,9 @@
       bank: (s, o, f) => `Saved handwriting: ${s} Hangul, ${o} letters, digits and marks` + (f ? `, ${f} fixed` : '') + '. Stored in this browser only.', nobank: 'Nothing uploaded yet.', reset: 'Start over', resetask: 'Delete all uploaded handwriting?',
       s3: '3. Build the font', s3p: 'Works with whatever you have uploaded. Blank boxes and unwritten characters are filled by composition.', even: 'Even out glyph size (off = as written)', align: 'Align vertically (off = as written)', make: 'Build font', making: 'Assembling glyphs… about 20 seconds.',
       made: (w, c) => `Done. ${w} written glyphs, ${c} composed.`,
-      sample: 'This is how it looks', placeholder: 'Type anything', download: 'Download TTF', after: 'Open the file in the NOTJANG BOOOKS app to write sheets with it.',
+      sample: 'This is how it looks', placeholder: 'Type anything', download: 'Download TTF', after: 'Install the TTF file on a computer to use it in other programs.',
+      useh: 'Write with it now', usep: 'In this browser you can write a sheet or a postcard in the handwriting you just made.', usewrite: 'Write one sheet', usepost: 'Write a postcard',
+      kept: 'This is the font you made last time. If you uploaded more handwriting, press Make font again.',
       fixh: 'Fix a few glyphs', fixp: 'Tap the glyphs you dislike in the sample above, or type them below. Print a sheet with only those, write, upload, and only those change. Characters you never wrote become written ones this way too.',
       fixph: 'Glyphs to fix', fixprint: 'Print fix sheet', fixnone: 'Pick the glyphs to fix first.', fixwait: (n) => `Fix sheet ready (${n} glyphs). Write it, then upload in step 2.`, fixdone: (n) => `${n} fixed glyphs added. Rebuilding the font.`, fixlost: 'This browser does not remember which glyphs were on that fix sheet. Please make a new fix sheet.', fixsheet: 'fix',
       empty: (n) => n + ' blank boxes', legal: 'Privacy policy'
@@ -930,6 +934,8 @@
     $('s3').textContent = L.s3; $('s3p').textContent = L.s3p; $('make').textContent = L.make;
     $('evenl').textContent = L.even; $('alignl').textContent = L.align;
     $('sampleh').textContent = L.sample; $('sampletext').placeholder = L.placeholder; $('download').textContent = L.download; $('after').textContent = L.after;
+    $('useh').textContent = L.useh; $('usep').textContent = L.usep; $('usewrite').textContent = L.usewrite; $('usepost').textContent = L.usepost;
+    if (keptShown) $('made').textContent = L.kept;
     $('fixh').textContent = L.fixh; $('fixp').textContent = L.fixp; $('fixchars').placeholder = L.fixph; $('fixprint').textContent = L.fixprint;
     $('legal').textContent = L.legal;
     buildSheets($('sheets'), LAY[2]); fitSheets();
@@ -1101,18 +1107,35 @@
     renderSample();
   }
 
+  /* 만든 폰트를 견본에 건다 */
+  async function showFont() {
+    if (previewFace) document.fonts.delete(previewFace);
+    previewFace = new FontFace('NotjangHandPreview', fontBuffer);
+    await previewFace.load(); document.fonts.add(previewFace);
+    $('result').hidden = false;
+    renderSample();
+  }
+  /* 지난번에 만든 폰트가 이 브라우저에 남아 있으면 다시 만들지 않고 바로 보여 준다 */
+  let keptShown = false;
+  async function restoreFont() {
+    if (!bank.size) return;
+    try {
+      const saved = await DB.get('ttf');
+      if (!saved || !saved.byteLength) return;
+      fontBuffer = saved; await showFont();
+      keptShown = true; $('made').textContent = L.kept;
+    } catch (e) { fontBuffer = null; $('result').hidden = true; }
+  }
+
   async function make() {
+    keptShown = false;
     $('make').disabled = true; $('made').textContent = L.making;
     await new Promise((ok) => setTimeout(ok, 30));
     const { font, glyphs, written, composed } = buildFont([...bank.values()], { even: $('even').checked, align: $('align').checked });
     fontBuffer = fixCmap(font.toArrayBuffer(), glyphs);
     DB.set('ttf', fontBuffer).catch(() => {});   // '한 장 써보기'가 이 글씨로 쓸 수 있게 이 브라우저에 남겨 둔다
     $('made').textContent = L.made(written, composed);
-    if (previewFace) document.fonts.delete(previewFace);
-    previewFace = new FontFace('NotjangHandPreview', fontBuffer);
-    await previewFace.load(); document.fonts.add(previewFace);
-    $('result').hidden = false;
-    renderSample();
+    await showFont();
     $('make').disabled = false;
   }
 
@@ -1148,8 +1171,9 @@
     };
     $('reset').onclick = () => {
       if (!window.confirm(L.resetask)) return;
-      bank.clear(); photos.clear(); pendingFix = null; fontBuffer = null;
+      bank.clear(); photos.clear(); pendingFix = null; fontBuffer = null; keptShown = false;
       DB.set('bank', { n: N, rows: [] }).catch(() => {}); DB.set('fix', null).catch(() => {});
+      DB.set('ttf', null).catch(() => {});   // 써보기와 엽서에서도 이 글씨가 사라진다
       $('result').hidden = true; $('made').textContent = '';
       renderUploads(); updateMake();
     };
@@ -1159,6 +1183,7 @@
     $('bankinfo').textContent = L.restoring;
     await restoreBank();
     renderUploads(); updateMake();
+    await restoreFont();
     window.NotjangFont.ready = true;
   }
   document.addEventListener('DOMContentLoaded', start);

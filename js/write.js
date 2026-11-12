@@ -233,6 +233,7 @@
     go(1);
     try { await document.fonts.load("400 20px 'Nanum Myeongjo'"); await document.fonts.load("700 20px 'Nanum Myeongjo'"); } catch (e) { /* 기본 글꼴로 */ }
     state.mine = await loadMine();
+    if (state.mine && new URLSearchParams(location.search).get('hand')) { state.font = 'mine'; checkText(); }   // 폰트 만들기에서 넘어왔으면 내 손글씨로 시작
     fontButtons();
   }
   function fontButtons() {
