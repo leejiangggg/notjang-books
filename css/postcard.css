@@ -4,6 +4,8 @@
 /* 뒤집기: 눌러서 앞면·뒷면. 돌리는 건 flip.js가 한다 */
 .flipper { position: relative; cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; will-change: transform; }
 .flipper:focus-visible { outline: 2px solid #e8708f; outline-offset: 6px; }
+/* 엽서는 가로로 눕힌 낱장(3:2) */
+.sheetcv.wide { aspect-ratio: 3 / 2; }
 
 /* 링크가 만들어진 뒤 */
 .ready { margin: 26px 0 10px; font-size: 15px; font-weight: 700; }
@@ -25,6 +27,8 @@
 .cstate { margin: 0; font-size: 14px; line-height: 1.9; text-align: center; opacity: .7; }
 .cstate:empty { display: none; }
 .flipper.recv { width: min(86vw, calc((100vh - 250px) * 2 / 3), 460px); width: min(86vw, calc((100dvh - 250px) * 2 / 3), 460px); aspect-ratio: 2 / 3; }
+/* 가로 엽서. 예전에 세로로 만든 엽서는 위 규칙 그대로 보인다 */
+.flipper.recv.wide { width: min(92vw, calc((100vh - 250px) * 3 / 2), 660px); width: min(92vw, calc((100dvh - 250px) * 3 / 2), 660px); aspect-ratio: 3 / 2; }
 .face { width: 100%; height: 100%; filter: drop-shadow(0 12px 28px rgba(0,0,0,.5)); }
 .face .mask { display: block; width: 100%; height: 100%; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
 .face img { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }

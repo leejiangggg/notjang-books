@@ -15,9 +15,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif:wght@400;700;800&family=Noto+Serif+KR:wght@400;700;800&display=swap">
-<link rel="stylesheet" href="css/site.css?v=44">
-<link rel="stylesheet" href="css/write.css?v=44">
-<link rel="stylesheet" href="css/postcard.css?v=44">
+<link rel="stylesheet" href="css/site.css?v=45">
+<link rel="stylesheet" href="css/write.css?v=45">
+<link rel="stylesheet" href="css/postcard.css?v=45">
 </head>
 <body class="stage">
 
@@ -39,7 +39,7 @@
 
   <section class="wstep" data-step="2" hidden>
     <h2 id="s2"></h2>
-    <div class="sheetwrap"><canvas id="front" class="sheetcv"></canvas><p id="busy" class="busy" data-t="printing" hidden></p></div>
+    <div class="sheetwrap"><canvas id="front" class="sheetcv wide"></canvas><p id="busy" class="busy" data-t="printing" hidden></p></div>
     <div class="tools">
       <label class="btn ghost"><input type="file" accept="image/*" id="pick" hidden><span id="addlabel"></span></label>
     </div>
@@ -63,8 +63,8 @@
   <section class="wstep" data-step="4" hidden>
     <h2 id="s4"></h2>
     <div id="flipper" class="flipper" role="button" tabindex="0">
-      <canvas id="pf" class="sheetcv" data-face="front"></canvas>
-      <canvas id="pb" class="sheetcv" data-face="back" hidden></canvas>
+      <canvas id="pf" class="sheetcv wide" data-face="front"></canvas>
+      <canvas id="pb" class="sheetcv wide" data-face="back" hidden></canvas>
     </div>
     <p class="hint center" data-t="flip"></p>
 
@@ -91,11 +91,11 @@
   </section>
 </main>
 
-<script src="config.js?v=44"></script>
-<script src="js/lang.js?v=44"></script>
-<script src="js/riso.js?v=44"></script>
-<script src="js/sheetkit.js?v=44"></script>
-<script src="js/flip.js?v=44"></script>
-<script src="js/postcard.js?v=44"></script>
+<script src="config.js?v=45"></script>
+<script src="js/lang.js?v=45"></script>
+<script src="js/riso.js?v=45"></script>
+<script src="js/sheetkit.js?v=45"></script>
+<script src="js/flip.js?v=45"></script>
+<script src="js/postcard.js?v=45"></script>
 </body>
 </html>

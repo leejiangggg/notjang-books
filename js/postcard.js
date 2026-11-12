@@ -5,6 +5,7 @@
   'use strict';
   const { PAPERS, W, H, S, INK, paperImg, wrap, drawLines, loadMine, readPhoto, api } = window.NotjangKit;
   const MAXLEN = 400, JPEG_MAX = 650 * 1024;
+  const CW = H, CH = W;                            // 엽서는 낱장을 옆으로 눕힌 것(3:2)
   const T = {
     KR: {
       title: '엽서 쓰기', lead: '앞면에는 사진, 뒷면에는 편지. 링크로 보내면 받는 사람이 눌러서 뒤집어 봐요.',
@@ -44,15 +45,18 @@
 
   /* 종이의 찢긴 가장자리를 따라 자른다. flat = 올릴 그림(JPEG라 투명이 없다): 자르지 않고 흰 바탕에 그린다. 받는 쪽이 종이 모양으로 다시 가린다. */
   /* 뒷면(mirror)은 같은 종이를 뒤집은 것이라 좌우가 바뀐다: 앞에서 왼쪽이 찢겼으면 뒤에서는 오른쪽이 찢겨 있다. */
+  /* 종이 그림은 세로라 시계 방향으로 눕혀 그린다(찢긴 왼쪽 가장자리가 위로 간다). 받은 엽서(card.js)의 가리개도 같은 방향이다. */
   function paperOn(ctx, paper, mirror) {
-    if (!mirror) { ctx.drawImage(paper, 0, 0, W, H); return; }
-    ctx.save(); ctx.translate(W, 0); ctx.scale(-1, 1); ctx.drawImage(paper, 0, 0, W, H); ctx.restore();
+    ctx.save();
+    if (mirror) { ctx.translate(CW, 0); ctx.scale(-1, 1); }
+    ctx.translate(CW, 0); ctx.rotate(Math.PI / 2); ctx.drawImage(paper, 0, 0, W, H);
+    ctx.restore();
   }
   function base(cv, paper, flat, mirror) {
-    cv.width = W; cv.height = H;
+    cv.width = CW; cv.height = CH;
     const ctx = cv.getContext('2d');
-    ctx.clearRect(0, 0, W, H);
-    if (flat) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H); }
+    ctx.clearRect(0, 0, CW, CH);
+    if (flat) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, CW, CH); }
     paperOn(ctx, paper, mirror);
     return ctx;
   }
@@ -63,7 +67,7 @@
     const paper = await paperImg(state.paper), ctx = base(cv, paper, flat);
     if (state.photo) {
       ctx.globalCompositeOperation = state.inks ? 'multiply' : 'source-over';
-      ctx.drawImage(state.printed || photoBox(), 0, 0, W, H);
+      ctx.drawImage(state.printed || photoBox(), 0, 0, CW, CH);
       ctx.globalCompositeOperation = 'source-over';
     }
     trim(ctx, paper, flat);
@@ -72,8 +76,8 @@
   const fontOf = (px) => `400 ${px}px ${state.font === 'mine' ? "'NotjangHandUser', " : ''}'Nanum Myeongjo', 'Noto Serif KR', serif`;
   async function renderBack(cv, flat) {
     const paper = await paperImg(state.paper), ctx = base(cv, paper, flat, true);
-    const k = state.font === 'mine' ? 1.2 : 1, px = 13 * S * k, lh = px * 2.05;
-    const side = 28 * S, width = W - side * 2, top = 40 * S, bottom = H - 30 * S;
+    const k = state.font === 'mine' ? 1.2 : 1, px = 13 * S * k, lh = px * 1.9;
+    const side = 30 * S, width = CW - side * 2, top = 30 * S, bottom = CH - 26 * S;
     let overflow = false;
     if (state.body.trim()) {
       ctx.fillStyle = INK; ctx.textBaseline = 'top'; ctx.font = fontOf(px);
@@ -86,12 +90,12 @@
     return { overflow };
   }
 
-  /* 종이 크기의 캔버스에 사진을 채워 그린다(자리 = posX, posY) */
+  /* 엽서 크기의 캔버스에 사진을 채워 그린다(자리 = posX, posY) */
   function photoBox() {
-    const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
-    const im = state.photo, fit = Math.max(W / im.width, H / im.height), dw = im.width * fit, dh = im.height * fit;
-    const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-    ctx.drawImage(im, (W - dw) * state.posX, (H - dh) * state.posY, dw, dh);
+    const cv = document.createElement('canvas'); cv.width = CW; cv.height = CH;
+    const im = state.photo, fit = Math.max(CW / im.width, CH / im.height), dw = im.width * fit, dh = im.height * fit;
+    const ctx = cv.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, CW, CH);
+    ctx.drawImage(im, (CW - dw) * state.posX, (CH - dh) * state.posY, dw, dh);
     return cv;
   }
   let printJob = 0;
@@ -154,11 +158,11 @@
     cv.addEventListener('pointerdown', (e) => {
       if (!state.photo) return;
       const r = cv.getBoundingClientRect();
-      start = { x: e.clientX, y: e.clientY, px: state.posX, py: state.posY, k: W / r.width }; cv.setPointerCapture(e.pointerId);
+      start = { x: e.clientX, y: e.clientY, px: state.posX, py: state.posY, k: CW / r.width }; cv.setPointerCapture(e.pointerId);
     });
     cv.addEventListener('pointermove', (e) => {
       if (!start) return;
-      const im = state.photo, fit = Math.max(W / im.width, H / im.height), overX = im.width * fit - W, overY = im.height * fit - H;
+      const im = state.photo, fit = Math.max(CW / im.width, CH / im.height), overX = im.width * fit - CW, overY = im.height * fit - CH;
       if (overX > 1) state.posX = Math.min(1, Math.max(0, start.px - (e.clientX - start.x) * start.k / overX));
       if (overY > 1) state.posY = Math.min(1, Math.max(0, start.py - (e.clientY - start.y) * start.k / overY));
       state.printed = null; renderFront(cv);
