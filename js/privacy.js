@@ -1,6 +1,6 @@
 /* 개인정보 처리방침. 한국어·영어. 일본어·독일어를 고르면 영어를 보여 준다. */
 (function () {
-  const SITE = 'https://notjangbooks.com/';
+  const SITE = 'https://papers.unrlmtr.life/';
   const LIKES = (window.NOTJANG_CONFIG && NOTJANG_CONFIG.likesURL) || '';
   const MAIL = (window.NOTJANG_CONFIG && NOTJANG_CONFIG.contactEmail) || '';
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
